@@ -23,7 +23,7 @@ public class HomeController {
 	
 	@Autowired
 	ProductsService productService;
-	
+	 
 	@Autowired
 	private UsersService usersService;
 	
@@ -50,6 +50,11 @@ public class HomeController {
 	public String doGetLogout(HttpSession session) {
 		session.removeAttribute(SessionConstant.CURRENT_USER);
 		return "redirect:/index";
+	}
+	
+	@GetMapping("/register")
+	public String doGetRegister(){
+		return "user/register";
 	}
 	
 	@PostMapping("/login")
