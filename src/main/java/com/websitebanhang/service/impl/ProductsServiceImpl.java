@@ -29,5 +29,10 @@ public class ProductsServiceImpl implements ProductsService  {
 		/* nếu như Optional có nhận 1 object trả về thì retuen lấy ra ko thì trả
 		 về null */
 		return result.isPresent() ? result.get() : null;
+	}
+
+	@Override
+	public Products findBySlug(String slug) {
+		return repo.findBySlug(slug);
 	} 
 }

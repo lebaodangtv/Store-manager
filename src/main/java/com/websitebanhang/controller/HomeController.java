@@ -53,8 +53,26 @@ public class HomeController {
 	}
 	
 	@GetMapping("/register")
-	public String doGetRegister(){
+	public String doGetRegister(Model model){
+		model.addAttribute("userRequest", new Users());
 		return "user/register";
+	}
+	
+	@PostMapping("/register")
+	public String doPostRegister(@ModelAttribute("userRequest")Users userRequest, HttpSession session ) {
+		try {
+			Users userResponse = usersService.save(userRequest);
+			// nếu userResponse có trả về data
+			if (ObjectUtils.isNotEmpty(userResponse)) {
+				session.setAttribute(SessionConstant.CURRENT_USER, userResponse);
+				return "redirect:/index";
+			} else {
+				return "redirect:/register";
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return "redirect:/register";
+		}
 	}
 	
 	@PostMapping("/login")
