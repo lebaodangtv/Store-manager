@@ -2,7 +2,9 @@ package com.websitebanhang.Api;
 
 import java.util.List;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +34,9 @@ public class ProductApi {
 	@GetMapping("/slug/{slug}")
 	public ResponseEntity<?> doGetBySlug(@PathVariable("slug") String slug){
 		Products product = productsService.findBySlug(slug);
+		if(ObjectUtils.isEmpty(product)) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // erorr 400
+		}
 		return ResponseEntity.ok(product);
 	}
 }
