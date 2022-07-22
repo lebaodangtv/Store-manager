@@ -2,6 +2,7 @@ package com.websitebanhang.constant;
 
 public class SessionConstant {
 	public static final String CURRENT_USER = "currenUser";
+	public static final String CURRENT_CART = "currentCart";
 	
 	// không cho new hàm tạo 
 	// chỉ cho sử dụng qua class không cho new qua đối tượng

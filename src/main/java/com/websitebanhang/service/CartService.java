@@ -8,4 +8,12 @@ public interface CartService {
 	 * SoLuong, khi nào cộng dồn khi nào thay thế kích hoạt isreplace
 	 */
 	CartDto updateCart(CartDto cart, Long productId, Integer quantity, boolean isReplace);
+	/* update tổng số lượng 
+	 *
+	 */
+	Integer getTotalQuantity(CartDto cart);
+	/* 
+	 * set lại số lượng
+	 */
+	Double getTotalPrice(CartDto cart);
 }
