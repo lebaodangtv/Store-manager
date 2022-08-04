@@ -31,4 +31,10 @@ public class CartApi {
 		return ResponseEntity.ok(currentCart);
 	}
 	
+	@GetMapping("/refresh") // gọi api này sao khi remove sp trong giỏ hàng
+	public ResponseEntity<?> doGetRefreshData(HttpSession session){
+		CartDto currentCart = SessionUtil.getCurrentCart(session);
+		return ResponseEntity.ok(currentCart);
+	}
+	
 }

@@ -123,7 +123,8 @@
                                     <tr class="cart_item" th:each="detail, i : ${session.currentCart.details}" >
                                         <td th:text="${i.index + 1}"></td>
                                         <td class="product-remove">
-                                            <a title="Remove this item" class="remove">×</a>
+                                            <a title="Remove this item" class="remove" 
+                                             th:attr="onclick = 'removeProduct(\'' + ${detail.key} + '\')'">×</a>
                                         </td>
                                         <td class="product-thumbnail">
                                             <a>
@@ -141,7 +142,9 @@
                                         <td class="product-quantity">
                                             <div class="quantity buttons_added">
                                                 <input type="number" class="input-text qty text" title="Qty" 
-                                                 th:value="${detail.value.quantity}" >
+                                                 th:value="${detail.value.quantity}" 
+                                                 th:id="quantity + ${detail.key}" 
+                                                 th:attr="onchange='updateQuantity(\'' + ${detail.key} + '\')'">
                                             </div>
                                         </td>
                                         <td class="product-subtotal">
@@ -218,5 +221,47 @@
     <!-- Slider -->
     <script type="text/javascript" th:src="@{/user/js/bxslider.min.js}"></script>
 	<script type="text/javascript" th:src="@{/user/js/script.slider.js}"></script>
+	
+	<script>
+		function removeProduct(productId){
+			var url = '/cart/update?productId=' + productId + '&quantity=0&isReplace=true';
+			$.get(url).done(function(data) {
+				$('#viewCartFragment').replaceWith(data);
+				callApiRefreshCart();
+			})
+		}
+		
+		function updateQuantity(productId) {
+			var idInput = '#quantity' + productId;
+			var newQuantity = $(idInput).val();
+			var url = '/cart/update?productId=' + productId + '&quantity=' + newQuantity + '&isReplace=true';
+			$.get(url).done(function(data) {
+				$('#viewCartFragment').replaceWith(data);
+				callApiRefreshCart();
+			})
+		}
+		
+		function callApiRefreshCart() {
+			var url = '/api/cart/refresh';
+			$.ajax({
+				url: url,
+				type: 'GET', // gọi pt nào
+				dataType: 'json', // kiểu data trả về
+				success: function(data) { // nếu thành công
+					$('#headerTotalPrice').text(formatCurrencty(data.totalPrice));
+					$('#headerTotalQuantity').text(data.totalQuantity);
+				},
+				error: function(error) { // nếu thất bại
+					alert(error);
+				}
+			})
+			
+		}
+		
+		function formatCurrencty(x){
+			return x.toString().replace(/\b(?=(\d{3})+(?!\d))/g,".") + ' đ ';
+		}
+	</script>
+	
 </body>
 </html>
