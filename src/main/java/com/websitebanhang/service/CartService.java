@@ -1,6 +1,7 @@
 package com.websitebanhang.service;
 
 import com.websitebanhang.dto.CartDto;
+import com.websitebanhang.entitys.Users;
 
 public interface CartService {
 	/*
@@ -16,4 +17,6 @@ public interface CartService {
 	 * set lại số lượng
 	 */
 	Double getTotalPrice(CartDto cart);
+	
+	void insert(CartDto cartDto, Users user, String address, String phone ) throws Exception;
 }

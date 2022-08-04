@@ -167,7 +167,8 @@
                                    	<tr>
                                    		<td colspan="12">
                                      	  	<input type="submit" value="Checkout" 
-                                     	  		name="proceed" class="checkout-button button alt wc-forward"/>
+                                     	  		name="proceed" class="checkout-button button alt wc-forward"
+                                     	  		th:attr="onclick='checkout()'" />
 										</td>
 									</tr>
                                 </tbody>
@@ -256,6 +257,35 @@
 				}
 			})
 			
+		}
+		
+		function checkout() {
+			var address = $('#address').val();
+			var phone = $('#phone_number').val();
+			var url = '/api/cart/checkout?address=' + address + '&phone=' + phone;
+			$.ajax({
+				url: url,
+				type: 'GET',
+				statusCode: {
+					200: handle200,
+					400: handle400,
+					401: handle401,
+				}
+			});
+		}
+		
+		function handle200() {
+			alert('Your payment was created succfully');
+			window.location.href='/index';
+		}
+		
+		function handle400() {
+			alert('Checkout failed, please try again');
+		}
+		
+		function handle401() {
+			alert('Please login before paying');
+			window.location.href='/login';
 		}
 		
 		function formatCurrencty(x){

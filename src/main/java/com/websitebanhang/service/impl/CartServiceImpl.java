@@ -2,20 +2,33 @@ package com.websitebanhang.service.impl;
 
 import java.util.HashMap;
 
+import javax.transaction.Transactional;
+
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.websitebanhang.dto.CartDetailDto;
 import com.websitebanhang.dto.CartDto;
+import com.websitebanhang.entitys.Orders;
 import com.websitebanhang.entitys.Products;
+import com.websitebanhang.entitys.Users;
 import com.websitebanhang.service.CartService;
+import com.websitebanhang.service.OrderDetailService;
+import com.websitebanhang.service.OrdersService;
 import com.websitebanhang.service.ProductsService;
 
 @Service
 public class CartServiceImpl implements CartService {
 
 	@Autowired
-	ProductsService productsService;
+	private ProductsService productsService;
+
+	@Autowired
+	private OrdersService ordersService;
+
+	@Autowired
+	private OrderDetailService orderDetailService;
 
 	@Override
 	public CartDto updateCart(CartDto cart, Long productId, Integer quantity, boolean isReplace) {
@@ -63,11 +76,11 @@ public class CartServiceImpl implements CartService {
 		Double totalPrice = 0D;
 		HashMap<Long, CartDetailDto> details = cart.getDetails();
 		for (CartDetailDto cartDetail : details.values()) {
-			totalPrice += (cartDetail.getPrice() *cartDetail.getQuantity());
+			totalPrice += (cartDetail.getPrice() * cartDetail.getQuantity());
 		}
 		return totalPrice;
 	}
-	
+
 	private CartDetailDto createNewCartDetail(Products product, Integer quantity) {
 		CartDetailDto cartDetailDto = new CartDetailDto();
 		cartDetailDto.setProductId(product.getId());
@@ -77,5 +90,37 @@ public class CartServiceImpl implements CartService {
 		cartDetailDto.setSlug(product.getSlug());
 		cartDetailDto.setName(product.getName());
 		return cartDetailDto;
+	}
+
+	@Transactional(rollbackOn = { Exception.class })
+	@Override
+	public void insert(CartDto cartDto, Users user, String address, String phone) throws Exception {
+		// thao tác tới 3 bảng: order, oder_details, product
+
+		// 1. insert vào bảng orders trướt
+		Orders order = new Orders();
+		order.setUser(user);
+		order.setAddress(address);
+		order.setPhone(phone);
+
+		// 2. orders được trả về sao khi insert
+		Orders orderResponse = ordersService.insert(order);
+
+		// 3. nếu orders insert vào hóa đơn bị tạch
+		if (ObjectUtils.isEmpty(orderResponse)) {
+			throw new Exception("Insert into order table failed");
+		}
+		
+		// 4. insert vào bảng Order_details
+		
+		for(CartDetailDto cartDetailDto: cartDto.getDetails().values()) {
+			cartDetailDto.setOrderId(orderResponse.getId());
+			orderDetailService.insert(cartDetailDto);
+			
+			// update new quantity cho bảng products
+			Products product = productsService.findById(cartDetailDto.getProductId());
+			Integer newQuantity = product.getQuantity() - cartDetailDto.getQuantity();
+			productsService.updateQuantity(newQuantity, product.getId());
+		}
 	}
 }
