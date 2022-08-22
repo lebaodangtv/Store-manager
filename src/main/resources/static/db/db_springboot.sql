@@ -114,3 +114,22 @@ insert into products([name],  typeId, quantity, price, unitId, imgUrl, [descript
 (N'San pham demo 2',				1, 15, 13270000, 1, 'oppo-reno-4.png', N'Điện thoại Oppo', 'san-pham-demo-2'),
 (N'San pham demo 3',				1, 15, 13270000, 1, 'oppo-reno-4.png', N'Điện thoại Oppo', 'san-pham-demo-3')
 go
+
+CREATE PROC sp_getTotalPricePerMonth
+(
+	@month varchar(2),
+	@year  varchar(4)
+)
+AS BEGIN
+	DECLARE @result varchar(20)
+	SET @result = (SELECT 
+						SUM(order_details.price * order_details.quantity)
+					FROM
+						orders INNER JOIN order_details
+							ON orders.id = order_details.orderId
+					WHERE 
+						MONTH(orders.createdDate) = @month
+						AND YEAR(orders.createdDate) = @year)
+	IF @result IS NULL BEGIN SET @result = '0' END
+	SELECT @result
+END
