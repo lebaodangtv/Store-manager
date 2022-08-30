@@ -1,6 +1,7 @@
 package com.websitebanhang.service.impl;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UsersService {
 	@Override
 	/* => trong String_Boot khi ko định nghĩ cụ thể thì @Transactional nó mặc định chỉ bắt Error
 	 * => kích hoạt cơ chế rollbackon khi có xảy ra lỗi Exception & Error */
-	@Transactional(rollbackOn = {Throwable.class})     
+	@Transactional(rollbackOn = {Exception.class, Throwable.class})
 	public Users save(Users users) throws SQLException {
 		Roles roles = rolesService.findByDescription(RolesConstant.USER);
 		users.setRoles(roles);
@@ -51,6 +52,17 @@ public class UserServiceImpl implements UsersService {
 		users.setHashPassword(bcrytPass.encode(users.getHashPassword()));
 		/* sao khi thực hiện xong các bước thì gán data vào users*/
 		return usersRepo.saveAndFlush(users);
+	}
+
+	@Override
+	public List<Users> findAll() {
+		return usersRepo.findByIsDeleted(Boolean.FALSE);
+	}
+
+	@Override
+	@Transactional(rollbackOn = {Exception.class, Throwable.class})
+	public void deleteLogical(String username) {
+		usersRepo.deleteLogical(username);
 	}
 
 }
