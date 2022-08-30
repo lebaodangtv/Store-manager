@@ -5,6 +5,7 @@ import java.util.HashMap;
 import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -95,6 +96,11 @@ public class CartServiceImpl implements CartService {
 	@Transactional(rollbackOn = { Exception.class })
 	@Override
 	public void insert(CartDto cartDto, Users user, String address, String phone) throws Exception {
+		
+		if(StringUtils.isAnyBlank(address,phone)) {
+			throw new Exception("Address or phone must be not null or empty or whitespace");
+		}
+		
 		// thao tác tới 3 bảng: order, oder_details, product
 		
 		// 1. insert vào bảng orders trướt

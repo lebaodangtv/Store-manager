@@ -1,6 +1,7 @@
 package com.websitebanhang.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,11 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.websitebanhang.constant.SessionConstant;
 import com.websitebanhang.constant.UsersRequestConstant;
+import com.websitebanhang.entitys.ProductTypes;
 import com.websitebanhang.entitys.Products;
 import com.websitebanhang.entitys.Users;
+import com.websitebanhang.service.ProductTypeService;
 import com.websitebanhang.service.ProductsService;
 import com.websitebanhang.service.UsersService;
 
@@ -27,6 +31,10 @@ public class HomeController {
 	@Autowired
 	private UsersService usersService;
 	
+	@Autowired 
+	private ProductTypeService productTypeService;
+	
+	
 	@GetMapping(value = {"/",""})
 	public String doGetRedirectIndex(){
 		return "redirect:/index";
@@ -36,8 +44,27 @@ public class HomeController {
 	public String doGetIndex(Model model) {
 		List<Products> products = productService.findAll();
 		model.addAttribute("products", products);
+		List<ProductTypes> productType = productTypeService.fillAll();
+		model.addAttribute("productType", productType);
 		return "user/index";
 	}
+	
+	@GetMapping("/type/{id}")
+	public String doGetType(Model model, @PathVariable("id") Optional<Long> id) {
+		if(id.isPresent()) {
+			List<Products> products = productService.productsTypeID(id.get());
+			model.addAttribute("products", products);
+			List<ProductTypes> productType = productTypeService.fillAll();
+			model.addAttribute("productType", productType);
+		}else {
+			List<Products> products = productService.findAll();
+			model.addAttribute("products", products);
+			List<ProductTypes> productType = productTypeService.fillAll();
+			model.addAttribute("productType", productType);
+		}
+		return "user/index";
+	}
+	
 	
 	@GetMapping("/login")
 	public String doGetLogin(Model model) {

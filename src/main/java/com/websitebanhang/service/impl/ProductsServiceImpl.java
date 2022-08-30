@@ -48,4 +48,9 @@ public class ProductsServiceImpl implements ProductsService {
 	public void updateQuantity(Integer newQuatity, Long id) {
 		repo.updateQuantity(newQuatity, id);
 	}
+
+	@Override
+	public List<Products> productsTypeID(Long typeId) {
+		return repo.getAllType(typeId);
+	}
 }

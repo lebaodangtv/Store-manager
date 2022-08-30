@@ -10,5 +10,5 @@ public interface ProductsService {
 	Products findById(Long id);
 	Products findBySlug(String slug);
 	void updateQuantity(Integer newQuatity, Long id);
-	
+	List<Products> productsTypeID(Long typeId);	
 }
