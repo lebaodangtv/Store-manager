@@ -44,9 +44,25 @@ public class UserController {
 		return "redirect:/admin/user";
 	}
 	
+	@GetMapping("/edit")
+	public String doGetEditUser(@RequestParam("username") String username,
+			Model model) {
+		Users userRequest = userService.findByUsername(username);
+		model.addAttribute("userRequest",userRequest);
+		return "admin/user :: #form";
+	}
+	
 	@PostMapping("/create")
-	public String doPostUserRequest(@ModelAttribute("userRequest") Users userRequest) {
-		
+	public String doPostUserRequest(@ModelAttribute("userRequest") Users userRequest,
+			RedirectAttributes redirectAttributes) {
+		try {
+			userService.save(userRequest);
+			redirectAttributes.addFlashAttribute("succeedMessage", "User" + userRequest.getUsername() + "was create successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+			redirectAttributes.addFlashAttribute("errorMessage","Cannot create user" + userRequest.getUsername() );
+		}
+		return "redirect:/admin/user";
 	}
 	
 }

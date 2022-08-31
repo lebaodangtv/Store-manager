@@ -11,4 +11,5 @@ public interface UsersService {
 	Users save(Users users) throws SQLException;
 	List<Users> findAll();
 	void deleteLogical(String username);
+	Users findByUsername(String username);
 }

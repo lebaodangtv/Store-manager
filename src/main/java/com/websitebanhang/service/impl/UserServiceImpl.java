@@ -65,4 +65,9 @@ public class UserServiceImpl implements UsersService {
 		usersRepo.deleteLogical(username);
 	}
 
+	@Override
+	public Users findByUsername(String username) {
+		return usersRepo.findByUsername(username);
+	}
+
 }
