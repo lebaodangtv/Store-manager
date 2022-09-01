@@ -10,6 +10,7 @@ public interface UsersService {
 	Users doLogin(Users usersRequest);
 	Users save(Users users) throws SQLException;
 	List<Users> findAll();
-	void deleteLogical(String username);
 	Users findByUsername(String username);
+	void deleteLogical(String username);
+	void update(Users user);
 }

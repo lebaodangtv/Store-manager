@@ -2,9 +2,12 @@ package com.websitebanhang.controller.admin;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,6 +55,25 @@ public class UserController {
 		return "admin/user :: #form";
 	}
 	
+	@PostMapping("/edit")
+	public String doPostEditUser(@Valid @ModelAttribute("userRequest") Users userRequest,
+			BindingResult bindingResult,
+			RedirectAttributes redirectAttributes) {
+		if(bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
+			redirectAttributes.addFlashAttribute("errorMessage","User is not valid");
+		} else {
+			try {
+				userService.update(userRequest);
+				redirectAttributes.addFlashAttribute("succeedMessage", "User" + userRequest.getUsername() + "has been edited successfully");
+			} catch (Exception e) {
+				e.printStackTrace();
+				redirectAttributes.addFlashAttribute("errorMessage", "Cannot update user" + userRequest.getUsername());
+			}
+		}
+		return "redirect:/admin/user";
+	}
+	
 	@PostMapping("/create")
 	public String doPostUserRequest(@ModelAttribute("userRequest") Users userRequest,
 			RedirectAttributes redirectAttributes) {
@@ -60,9 +82,8 @@ public class UserController {
 			redirectAttributes.addFlashAttribute("succeedMessage", "User" + userRequest.getUsername() + "was create successfully");
 		} catch (Exception e) {
 			e.printStackTrace();
-			redirectAttributes.addFlashAttribute("errorMessage","Cannot create user" + userRequest.getUsername() );
+			redirectAttributes.addFlashAttribute("errorMessage", "Cannot create user" + userRequest.getUsername());
 		}
 		return "redirect:/admin/user";
 	}
-	
 }

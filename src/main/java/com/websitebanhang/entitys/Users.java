@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -35,15 +37,18 @@ public class Users implements Serializable {/**
 	private Long id;
 	
 	@Column
+	@Size(max = 20, message = "Username must be less than 20 characters")
 	private String username;
 	
 	@Column 
+	@Size(max = 50, message = "Fullname must be less than 50 characters")
 	private String fullname;
 	
 	@Column 
 	private String hashPassword;
 	
 	@Column
+	@Email
 	private String email;
 	
 	@Column 

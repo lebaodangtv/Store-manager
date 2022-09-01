@@ -6,6 +6,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,14 +24,14 @@ public class UserServiceImpl implements UsersService {
 	private final BCryptPasswordEncoder bcrytPass = new BCryptPasswordEncoder();
 	
 	@Autowired
-	private UsersRepo usersRepo;
+	private UsersRepo userRepo;
 		
 	@Autowired
 	private RolesService rolesService;
 
 	@Override
 	public Users doLogin(Users usersRequest) {
-		Users userReponse = usersRepo.findByUsername(usersRequest.getUsername());
+		Users userReponse = userRepo.findByUsername(usersRequest.getUsername());
 		if (ObjectUtils.isNotEmpty(userReponse)) {
 			/* check pass người dùng nhập vào và pass trong database */
 			boolean checkPassword = bcrytPass.matches(usersRequest.getHashPassword(), userReponse.getHashPassword());
@@ -51,23 +52,35 @@ public class UserServiceImpl implements UsersService {
 		/* mã hóa password gốc trướt khi gán*/
 		users.setHashPassword(bcrytPass.encode(users.getHashPassword()));
 		/* sao khi thực hiện xong các bước thì gán data vào users*/
-		return usersRepo.saveAndFlush(users);
+		return userRepo.saveAndFlush(users);
 	}
 
 	@Override
 	public List<Users> findAll() {
-		return usersRepo.findByIsDeleted(Boolean.FALSE);
+		return userRepo.findByIsDeleted(Boolean.FALSE);
 	}
 
 	@Override
 	@Transactional(rollbackOn = {Exception.class, Throwable.class})
 	public void deleteLogical(String username) {
-		usersRepo.deleteLogical(username);
+		userRepo.deleteLogical(username);
 	}
 
 	@Override
 	public Users findByUsername(String username) {
-		return usersRepo.findByUsername(username);
+		return userRepo.findByUsername(username);
+	}
+
+	@Override
+	@Transactional(rollbackOn = {Exception.class, Throwable.class})
+	public void update(Users user) {
+		if(ObjectUtils.isNotEmpty(user) && StringUtils.isEmpty(user.getHashPassword())) {
+			userRepo.updateNonPass(user.getEmail(), user.getFullname(), user.getUsername());
+		} else {
+			String hashPassword = bcrytPass.encode(user.getHashPassword());
+			user.setHashPassword(hashPassword);
+			userRepo.update(user.getEmail(), hashPassword, user.getFullname(), user.getUsername());
+		}
 	}
 
 }
