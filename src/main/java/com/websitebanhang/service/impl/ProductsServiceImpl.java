@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.websitebanhang.entitys.Products;
@@ -52,5 +54,14 @@ public class ProductsServiceImpl implements ProductsService {
 	@Override
 	public List<Products> productsTypeID(Long typeId) {
 		return repo.getAllType(typeId);
+	}
+
+	@Override
+	public Page<Products> findAll(int pageSize, int pageNumber) throws Exception {
+		if(pageNumber >= 1) {
+			return repo.findByIsDeletedAndQuantityGreaterThan(Boolean.FALSE, 0, PageRequest.of(pageNumber - 1 , pageSize));
+		} else {
+			throw new Exception("Page number must be greater than 0");
+		}
 	}
 }

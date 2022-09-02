@@ -188,7 +188,7 @@
 												<td th:text="${user.username}"></td>
 												<td th:text="${user.fullname}"></td>
 												<td th:text="${user.email}"></td>
-												<td></td>
+												<td><img th:src="@{'/user/img/' + ${user.imgUrl}}" style="height: 50px" /></td>
 												<td th:text="${user.roles.description}"></td>
 												<td align="center">
 													<button class="btn btn-success"
