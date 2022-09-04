@@ -3,10 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Product</title>
-	
-	<!-- Favicon -->
-	<link rel="icon" th:href="@{/admin/dist/img/AdminLTELogo.png}" type="image/x-icon">
+	<title>User</title>
 	
 	<!-- Google Font: Source Sans Pro -->
 	<link rel="stylesheet"
@@ -59,15 +56,15 @@
 			<!-- Sidebar -->
 			<div class="sidebar">
 				<!-- Sidebar user panel (optional) -->
-				<div class="user-panel mt-3 pb-3 mb-3 d-flex" th:if="${session.currentUser != null}">
-                    <div class="image">
-                        <img th:src="@{'/user/assets/img/avatar/' + ${session.currentUser.imgUrl}}" class="img-circle elevation-2"
-                            alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a href="#" class="d-block" th:text="${session.currentUser.username}"></a>
-                    </div>
-                </div>
+				<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+					<div class="image">
+						<img th:src="@{/admin/dist/img/user2-160x160.jpg}"
+							class="img-circle elevation-2" alt="User Image">
+					</div>
+					<div class="info">
+						<a href="#" class="d-block">Username</a>
+					</div>
+				</div>
 
 				<!-- SidebarSearch Form -->
 				<div class="form-inline">
@@ -93,18 +90,18 @@
 								<p>Home</p>
 						</a></li>
 						<li class="nav-item"><a th:href="@{/admin/user}"
-							class="nav-link"> <i class="nav-icon fas fa-copy"></i>
+							class="nav-link active"> <i class="nav-icon fas fa-copy"></i>
 								<p>Users</p>
 						</a></li>
-						<li class="nav-item menu-is-opening menu-open"><a href="#" class="nav-link active"> <i
+						<li class="nav-item"><a href="#" class="nav-link"> <i
 								class="nav-icon fas fa-chart-pie"></i>
 								<p>
 									Products <i class="right fas fa-angle-left"></i>
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item"><a th:href="@{/admin/product}"
-									class="nav-link active" style="opacity: .8;"> <i class="far fa-circle nav-icon"></i>
+								<li class="nav-item"><a href="pages/charts/chartjs.html"
+									class="nav-link"> <i class="far fa-circle nav-icon"></i>
 										<p>Overview</p>
 								</a></li>
 								<li class="nav-item"><a href="pages/charts/flot.html"
@@ -153,7 +150,7 @@
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
 								<li class="breadcrumb-item"><a th:href="@{/admin/}">Home</a></li>
-								<li class="breadcrumb-item active">Product</li>
+								<li class="breadcrumb-item active">User</li>
 							</ol>
 						</div>
 					</div>
@@ -169,7 +166,7 @@
 							<div class="card">
 								<div class="card-header">
 									<h3 class="card-title">Danh sách sản phẩm</h3>
-									<button style="float: right" id="createBtn" type="button" class="btn btn-success">Create new product</button>
+									<button style="float: right" id="createBtn" type="button" class="btn btn-success">Create new user</button>
 								</div>
 								<!-- /.card-header -->
 								<div class="card-body">
@@ -177,42 +174,35 @@
 										<thead>
 											<tr>
 												<th></th>
-												<th>Id</th>
-												<th>Name</th>
-												<th>Type</th>
-												<th>Brand</th>
+												<th>Product name</th>
 												<th>Quantity</th>
 												<th>Price</th>
-												<th>Unit</th>
 												<th style="width: 80px;">Image</th>
-												<th>Description</th>
 												<th>Slug</th>
+												<th>Description</th>
+												<th>IsDeleted</th>
+												<th>ProductTypes</th>
 												<th>Action</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr th:each="product, index : ${products}">
 												<td th:text="${index.index + 1}"></td>
-												<td th:text="${product.id}"></td>
 												<td th:text="${product.name}"></td>
-												<td th:text="${product.productType.slug}"></td>
-												<td th:text="${product.brandType.slug}"></td>
 												<td th:text="${product.quantity}"></td>
-												<td th:text="${product.price}"></td>
-												<td th:text="${product.unitType.description}"></td>
-												<td>
-													<img th:src="@{'/user/assets/img/gallery/' + ${product.imgUrl == null ? 'default.png' : product.imgUrl}}" class="elevation-2"
-                           								alt="Product Image" style="width: 50px; height: 50px">
-												</td>
-												<td th:text="${product.description}"></td>
+												<td th:text="${#numbers.formatCurrency(product.price)}"></td>
+												<td><img th:src="@{'/user/img/' + ${product.imgUrl}}" style="height: 50px" /></td>
 												<td th:text="${product.slug}"></td>
+												<td th:text="${product.description}"></td>
+												<td th:text="${product.isDeleted ? '' : 'Còn hàng'}"></td>
+												<td th:text="${product.productTypes.id == 1 ? 'DIEN-THOAI' : 'LAPTOP'}"></td>
 												<td align="center">
-													<button class="btn btn-success" 
-														th:attr="onclick='editProduct(\'' + ${product.id} + '\')'">
+													<button class="btn btn-success"
+														th:attr="onclick='editUser(\'' + ${product.name} + '\')'">
 														<i class="fa fa-edit" aria-hidden="true"></i>
 													</button>
-													<a class="btn btn-danger" 
-														th:href="@{'/admin/product/delete?id=' + ${product.id}}">
+													<a class="btn btn-danger"
+														th:href="${'/admin/user/delete?username=' + product.name}">
 														<i class="fa fa-trash" aria-hidden="true"></i>
 													</a>
 												</td>
@@ -227,85 +217,97 @@
 						<!-- /.col -->
 					</div>
 					<!-- /.row -->
-					
-					
+
 					<div class="row">
 			          <!-- left column -->
 			          <div class="col-12">
 			            <!-- general form elements -->
 			            <div class="card card-primary">
 			              <div class="card-header">
-			                <h3 class="card-title">Product Details</h3>
+			                <h3 class="card-title">User Details</h3>
 			              </div>
 			              <!-- /.card-header -->
-			              <!-- form start -->
-			              <form id="form" method="POST">
+			 
+			              <!-- form start --> 
+			              <form id="form" method="POST" th:object="${userRequest}">
 			                <div class="card-body">
 			                	<div class="row">
-								    <div class="col-8">
-								        <div class="form-group">
-								            <label for="id">Id</label>
-								            <input type="text" class="form-control" id="id" readonly="true">
-								        </div>
-								        <div class="form-group">
-								            <label for="name">Name</label>
-								            <input type="text" class="form-control" id="name" readonly="true">
-								        </div>
-								        <div class="mb-3">
-								            <label for="brand" class="form-label">Brand</label>
-								            <select class="form-control" name="brand" id="brand" disabled>
-								                <option th:each="brandType : ${brandTypes}"
-													th:value="${brandType.slug}" 
-													th:text="${brandType.description}" 
-													th:selected="${brandType.slug} == ${brandTypeSelected}">
-												</option>
-								            </select>
-								        </div>
-								        <div class="form-group">
-								            <label for="quantity">Quantity</label>
-								            <input type="number" class="form-control" id="quantity" readonly="true">
-								        </div>
-								        <div class="form-group">
-								            <label for="price">Price</label>
-								            <input type="number" class="form-control" id="price" readonly="true">
-								        </div>
-								        <div class="form-group">
-								            <label for="description">Description</label>
-								            <input type="text" class="form-control" id="description" readonly="true">
-								        </div>
-								        <div class="form-group">
-								            <label for="slug">Slug</label>
-								            <input type="text" class="form-control" id="slug" readonly="true">
-								        </div>
-								    </div>
-								    <div class="col-4">
-								        <!-- Profile Image -->
-								        <div class="card card-primary card-outline">
-								            <div class="card-body box-profile">
-								                <div class="text-center">
-								                    <img class="profile-user-img img-fluid img-circle" style="width: 212px; height: 212px"
-								                        th:src="@{'/user/assets/img/gallery/' + ${productRequest == null ? 'default.png' : productRequest.imgUrl}}"
-								                        alt="Product picture" id="userImgUpload">
-								                </div>
-								                <br />
-								                <div class="form-group">
-								                    <label for="inputFile">Picture</label>
-								                    <div class="input-group">
-								                        <div class="custom-file">
-								                            <input type="file" class="custom-file-input" id="inputFile">
-								                            <label class="custom-file-label" for="inputFile">Choose file</label>
-								                        </div>
-								                        <div class="input-group-append">
-								                            <span class="input-group-text">Upload</span>
-								                        </div>
-								                    </div>
-								                </div>
-								            </div>
-								            <!-- /.card-body -->
-								        </div>
-								        <!-- /.card -->
-								    </div>
-								</div>
+				                   <div class="col-8">
+					                  <div class="form-group">
+					                    <label for="productName">Product name</label>
+					                    <input type="text" 
+					                    		class="form-control" id="productnameId" readonly="true"
+					                    		th:field="*{name}">
+					                  </div>
+					                  <div class="form-group">
+					                    <label for="quantity">Quantity</label>
+					                    <input type="number" 
+					                    		class="form-control" id="quanityId" readonly="true"
+					                    		th:field="*{quantity}">
+					                  </div>
+					                  <div class="form-group">
+					                    <label for="price">Price</label>
+					                    <input type="number" class="form-control" 
+					                    		id="priceId" readonly="true"
+					                    		th:field="*{price}">
+					                  </div>
+					                  
+					                  <div class="form-group">
+					                    <label for="slug">Slug</label>
+					                    <input type="text" class="form-control" 
+					                    		id="slugId" readonly="true"
+					                    		th:field="*{slug}"  >
+					                  </div>
+					                  <div class="form-group">
+					                    <label for="description">Description</label>
+					                    <input type="text" class="form-control" 
+					                    		id="descriptionId" readonly="true"
+					                    		th:field="*{description}">
+					                  </div>
+					                  <label>Loại sản phẩm</label> <br>
+									  <select th:field="*{productTypes.id}" th:remove="all-but-first" name="productTypeid" class="form-control" style="width: 50%;">
+									    <option th:each="product : ${productTypes}" th:value="${product.id}"
+									            th:text="${product.description}">
+									    </option>
+									  </select> <br> 
+									  <label>Loại đơn vị</label> <br>
+									  <select th:field="*{unitTypes.id}" th:remove="all-but-first" name="unitTypeid" class="form-control" style="width: 50%;">
+									    <option th:each="unitType : ${unitTypes}" th:value="${unitType.id}"
+									            th:text="${unitType.description}">
+									    </option>
+									  </select> <br> <br>
+									</div>
+									<div class="col-4">
+										<!-- Profile Image -->
+				
+										<div class="card card-primary card-outline">
+											<div class="card-body box-profile">
+												<div class="text-center">
+													<img class="profile-user-img img-fluid img-circle"
+															style="width: 212px; height: 212px"
+															th:src="@{/admin/img/default.png}"
+															alt="User profile picture"
+															id="userImgUpload">
+												</div>
+												<br/>
+												<div class="form-group">
+                    								<label for="inputFile">Avatar</label>
+                   									<div class="input-group">
+                     										<div class="custom-file">
+                       										<input type="file" class="custom-file-input" id="inputFile">
+                       										<label class="custom-file-label" for="inputFile">Choose file</label>
+                     										</div>
+                     										<div class="input-group-append">
+                       										<span class="input-group-text">Upload</span>
+                     										</div>
+                   									</div>
+                  								</div>
+											</div>
+											<!-- /.card-body -->
+										</div>
+										<!-- /.card -->
+									</div>
+				               </div>
 			                </div>
 			                <!-- /.card-body -->			                
 			                <div class="card-footer">
@@ -314,6 +316,7 @@
 			                  <button type="button" class="btn btn-warning">Cancel</button>
 			                </div>
 			              </form>
+			            	
 			            </div>
 			            <!-- /.card -->
 					</div>
@@ -340,9 +343,6 @@
 		<!-- /.control-sidebar -->
 	</div>
 	<!-- ./wrapper -->
-	<div th:if="${session.currentUser != null}">
-    	<input type="hidden" id="hiddenUserRole" th:value="${session.currentUser.role.description == 'admin' ? 'true' : 'false'}">
-    </div>
 
 	<!-- jQuery -->
 	<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
@@ -375,19 +375,17 @@
 	<script th:src="@{/admin/dist/js/demo.js}"></script>
 	<!-- Page specific script -->
 	<script>
-		$(document).ready(
-				function() {
-					$("#example1").DataTable({
-						"pageLength" : 5,
-						"responsive" : true,
-						"lengthChange" : false,
-						"autoWidth" : false,
-						"buttons" : [ "csv", "excel", "pdf", "print" ]
-					}).buttons().container().appendTo(
-							'#example1_wrapper .col-md-6:eq(0)');
-				});
-
 		$(document).ready(function() {
+		    $("#example1").DataTable({
+		    	"pageLength": 5,
+		      	"responsive": true, 
+		      	"lengthChange": false, 
+		      	"autoWidth": false,
+		      	"buttons": ["csv", "excel", "pdf", "print"]
+		    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+		 });
+		
+		$(document).ready(function(){
 			var errorMessage = $('#errorMessage').text();
 			var succeedMessage = $('#succeedMessage').text();
 			
@@ -400,31 +398,38 @@
 				$('#thongBao').addClass('alert alert-success');
 				$('#thongBao').css('display', 'block');
 			}
-			
-			setTimeout(function() {
-				$('#thongBao').css('display', 'none');
-			}, 5000);
 		});
 		
-		$('#createBtn').click(function() {
+		$('#createBtn').click(function(){
 			$('html, body').animate({
 				scrollTop: $('#form').offset().top
 			}, 1000);
 			$('#form :input').prop('readonly', false);
-			$('#brand').prop('disabled', false);
 			$('#submitCreate').prop('disabled', false);
-			$('#form').prop('action', '/admin/user/create');
+			$('#form').prop('action', '/admin/product/create');
 		});
 		
+		$('#submitCreate').click(function(){
+			$('#form').submit();
+		});
 		
+		function editUser(username) {
+			var url = '/admin/user/edit?username=' + username;
+			$.get(url).done(function(data){
+				$('#form').replaceWith(data);
+				$('html, body').animate({
+					scrollTop: $('#form').offset().top
+				}, 1000);
+				$('#form :input').prop('readonly', false);
+				$('input#username').prop('readonly', true);
+				$('#submitUpdate').prop('disabled', false);
+				$('#form').prop('action', '/admin/user/edit');
+			});
+		}
 		
-		function loadPage() {
-    		let checkLoginAdmin = $('#hiddenUserRole').val();
-    		if(checkLoginAdmin != 'true') {
-    			window.location.href = '/index';
-    		}
-    	}
-    	window.onload = loadPage;
+		function submitFormEdit() {
+			$('#form').submit();
+		}
 	</script>
 </body>
 </html>

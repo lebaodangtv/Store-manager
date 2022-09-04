@@ -90,7 +90,8 @@ public class HomeController {
 	@GetMapping("/logout")
 	public String doGetLogout(HttpSession session) {
 		session.removeAttribute(SessionConstant.CURRENT_USER);
-		return "redirect:/index";
+		return "redirect:/index"; 
+		
 	}
 	
 	@GetMapping("/register")

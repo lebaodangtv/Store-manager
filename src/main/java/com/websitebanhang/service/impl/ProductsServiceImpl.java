@@ -23,13 +23,11 @@ public class ProductsServiceImpl implements ProductsService {
 
 	@Override
 	public List<Products> findAll() {
-		// TODO Auto-generated method stub
 		return repo.findByIsDeletedAndQuantityGreaterThan(Boolean.FALSE, 0);
 	}
 
 	@Override
 	public Products findById(Long id) {
-		// TODO Auto-generated method stub
 		Optional<Products> result = repo.findById(id);
 		/*
 		 * nếu như Optional có nhận 1 object trả về thì retuen lấy ra ko thì trả về null
@@ -63,5 +61,12 @@ public class ProductsServiceImpl implements ProductsService {
 		} else {
 			throw new Exception("Page number must be greater than 0");
 		}
+	}
+
+	@Override
+	@Transactional(rollbackOn = {Exception.class, Throwable.class})
+	public Products save(Products product) {
+		product.setIsDeleted(Boolean.FALSE);
+		return repo.saveAndFlush(product);
 	}
 }

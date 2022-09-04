@@ -34,5 +34,4 @@ public class UnitTypes implements Serializable {/**
 	@Column
 	private Boolean isDeleted;
 	
-
 }
