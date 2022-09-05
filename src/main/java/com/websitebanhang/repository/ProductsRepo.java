@@ -15,6 +15,7 @@ import com.websitebanhang.entitys.Products;
 public interface ProductsRepo extends JpaRepository<Products, Long> {
 	List<Products> findByProductTypes_Id(Long typeId);
 	Products findBySlug(String slug);
+	Products findByName(String name);
 	
 	// viết theo truy vấn sql 
 	@Query(value = "select * from products where isDeleted = 0 and quantity > 0",
@@ -34,4 +35,7 @@ public interface ProductsRepo extends JpaRepository<Products, Long> {
 	@Query(value = "SELECT * FROM products WHERE typeId = ?1", nativeQuery = true )
 	List<Products> getAllType(Long typeID);
 	
+	@Modifying(clearAutomatically = true)
+	@Query(value = "UPDATE products SET typeID = ?1, quantity = ?2, price = ?3, unitId = ?4, imgUrl = ?5, description = ?6, slug=?7 WHERE name = ?8 ", nativeQuery = true)
+	void updateProduct(Long typeID, Integer quantity, Double price,Long unitId, String imgUrl,String description,String slug, String name);
 }

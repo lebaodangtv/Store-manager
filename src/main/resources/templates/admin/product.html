@@ -100,13 +100,13 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="pages/charts/chartjs.html"
+								<li class="nav-item"><a th:href="@{/admin/product}"
 									class="nav-link"> <i class="far fa-circle nav-icon"></i>
-										<p>Overview</p>
+										<p>Products</p>
 								</a></li>
 								<li class="nav-item"><a href="pages/charts/flot.html"
 									class="nav-link"> <i class="far fa-circle nav-icon"></i>
-										<p>Create new product</p>
+										<p>ProductTypes</p>
 								</a></li>
 							</ul></li>
 						<li class="nav-item"><a href="#" class="nav-link"> <i
@@ -198,7 +198,7 @@
 												<td th:text="${product.productTypes.id == 1 ? 'DIEN-THOAI' : 'LAPTOP'}"></td>
 												<td align="center">
 													<button class="btn btn-success"
-														th:attr="onclick='editUser(\'' + ${product.name} + '\')'">
+														th:attr="onclick='editProduct(\'' + ${product.name} + '\')'">
 														<i class="fa fa-edit" aria-hidden="true"></i>
 													</button>
 													<a class="btn btn-danger"
@@ -229,7 +229,7 @@
 			              <!-- /.card-header -->
 			 
 			              <!-- form start --> 
-			              <form id="form" method="POST" th:object="${userRequest}">
+			              <form id="form" method="POST" th:object="${productRequest}">
 			                <div class="card-body">
 			                	<div class="row">
 				                   <div class="col-8">
@@ -249,9 +249,8 @@
 					                    <label for="price">Price</label>
 					                    <input type="number" class="form-control" 
 					                    		id="priceId" readonly="true"
-					                    		th:field="*{price}">
-					                  </div>
-					                  
+					                    		th:field="*{price}"> 
+					                  </div>					                  
 					                  <div class="form-group">
 					                    <label for="slug">Slug</label>
 					                    <input type="text" class="form-control" 
@@ -275,7 +274,7 @@
 									    <option th:each="unitType : ${unitTypes}" th:value="${unitType.id}"
 									            th:text="${unitType.description}">
 									    </option>
-									  </select> <br> <br>
+									  </select> <br> 
 									</div>
 									<div class="col-4">
 										<!-- Profile Image -->
@@ -313,7 +312,7 @@
 			                <div class="card-footer">
 			                  <button type="button" id="submitCreate" disabled class="btn btn-primary">Create</button>
 			                  <button type="button" id="submitUpdate" th:attr="onclick='submitFormEdit()'" disabled class="btn btn-success">Update</button>
-			                  <button type="button" class="btn btn-warning">Cancel</button>
+			                  <a th:href="@{/admin/product}"><button type="button" class="btn btn-warning">Cancel</button></a>
 			                </div>
 			              </form>
 			            	
@@ -413,8 +412,8 @@
 			$('#form').submit();
 		});
 		
-		function editUser(username) {
-			var url = '/admin/user/edit?username=' + username;
+		function editProduct(name) {
+			var url = '/admin/product/edit?productname=' + name;
 			$.get(url).done(function(data){
 				$('#form').replaceWith(data);
 				$('html, body').animate({
@@ -423,10 +422,10 @@
 				$('#form :input').prop('readonly', false);
 				$('input#username').prop('readonly', true);
 				$('#submitUpdate').prop('disabled', false);
-				$('#form').prop('action', '/admin/user/edit');
+				$('#form').prop('action', '/admin/product/edit');
 			});
 		}
-		
+			 
 		function submitFormEdit() {
 			$('#form').submit();
 		}

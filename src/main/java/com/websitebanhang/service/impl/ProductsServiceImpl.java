@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -68,5 +69,18 @@ public class ProductsServiceImpl implements ProductsService {
 	public Products save(Products product) {
 		product.setIsDeleted(Boolean.FALSE);
 		return repo.saveAndFlush(product);
+	}
+
+	@Override
+	@Transactional(rollbackOn = {Exception.class, Throwable.class})
+	public void updateProduct(Products product) {
+		if(ObjectUtils.isNotEmpty(product)) {
+			repo.updateProduct(product.getProductTypes().getId(), product.getQuantity(), product.getPrice(), product.getUnitTypes().getId(),product.getImgUrl(), product.getDescription(), product.getSlug(), product.getName());
+		}
+	}
+
+	@Override
+	public Products findByName(String name) {
+		return repo.findByName(name);
 	}
 }
