@@ -22,8 +22,6 @@ import com.websitebanhang.service.ProductTypeService;
 import com.websitebanhang.service.ProductsService;
 import com.websitebanhang.service.UnitTypeService;
 
-import lombok.val;
-
 @Controller
 @RequestMapping("/admin/product")
 public class ProductsController {
@@ -45,6 +43,20 @@ public class ProductsController {
 		model.addAttribute("unitTypes",unitType);
 		model.addAttribute("productRequest", new Products());
 		return "admin/product";
+	}
+	
+	// /admin/product/delete?name={...}
+	@GetMapping("/delete")
+	public String doGetDelete(@RequestParam("productname") String name,
+			RedirectAttributes redirectAttributes) {
+		try {
+			productsService.deleteProduct(name);
+			redirectAttributes.addFlashAttribute("succeedMessage","Product" + name + "was deleted");
+		} catch (Exception e) {
+			e.printStackTrace();
+			redirectAttributes.addFlashAttribute("errorMessage","Cannot delete product" + name );
+		}
+		return "redirect:/admin/product";
 	}
 	
 	@GetMapping("/edit")

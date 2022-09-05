@@ -8,12 +8,13 @@ import com.websitebanhang.entitys.Products;
 
 public interface ProductsService {
 	List<Products> findAll();
+	List<Products> productsTypeID(Long typeId);	
 	Page<Products> findAll(int pageSize, int pageNumber) throws Exception;
+	Products save(Products product);
+	Products findByName(String name);
 	Products findById(Long id);
 	Products findBySlug(String slug);
-	void updateQuantity(Integer newQuatity, Long id);
-	List<Products> productsTypeID(Long typeId);	
-	Products save(Products product);
 	void updateProduct(Products product);
-	Products findByName(String name);
+	void updateQuantity(Integer newQuatity, Long id);
+	void deleteProduct(String name);
 }

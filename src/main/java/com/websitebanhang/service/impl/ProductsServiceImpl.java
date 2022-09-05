@@ -83,4 +83,10 @@ public class ProductsServiceImpl implements ProductsService {
 	public Products findByName(String name) {
 		return repo.findByName(name);
 	}
+
+	@Override
+	@Transactional(rollbackOn = {Exception.class, Throwable.class})
+	public void deleteProduct(String name) {
+		repo.deleteProduct(name);
+	}
 }

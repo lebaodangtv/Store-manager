@@ -13,6 +13,7 @@ import com.websitebanhang.entitys.Products;
 
 @Repository
 public interface ProductsRepo extends JpaRepository<Products, Long> {
+	
 	List<Products> findByProductTypes_Id(Long typeId);
 	Products findBySlug(String slug);
 	Products findByName(String name);
@@ -38,4 +39,8 @@ public interface ProductsRepo extends JpaRepository<Products, Long> {
 	@Modifying(clearAutomatically = true)
 	@Query(value = "UPDATE products SET typeID = ?1, quantity = ?2, price = ?3, unitId = ?4, imgUrl = ?5, description = ?6, slug=?7 WHERE name = ?8 ", nativeQuery = true)
 	void updateProduct(Long typeID, Integer quantity, Double price,Long unitId, String imgUrl,String description,String slug, String name);
+	
+	@Modifying(clearAutomatically = true)
+	@Query(value = "UPDATE products SET isDeleted = 1 WHERE name = ?1", nativeQuery = true)
+	void deleteProduct(String name);
 }
