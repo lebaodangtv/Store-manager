@@ -50,9 +50,6 @@
 						<li>
 							<a th:href="@{/index}">Home</a>
 						</li>
-						<li th:each="productType : ${productType}">
-							<a th:href="@{'/type/' + ${productType.id}}">[[${productType.slug}]]</a>
-						</li>	
 						<li th:if="${session.currenUser == null}">
 							<a th:href="@{/login}">Login</a>
 						</li>

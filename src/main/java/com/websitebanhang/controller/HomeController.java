@@ -38,7 +38,7 @@ public class HomeController {
 	@Autowired 
 	private ProductTypeService productTypeService;
 	
-	private static final int MAX_SIZE = 4;
+	private static final int MAX_SIZE = 6;
 	
 	
 	@GetMapping(value = {"/",""})

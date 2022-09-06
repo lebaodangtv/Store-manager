@@ -12,7 +12,7 @@ import com.websitebanhang.entitys.OrderDetails;
 @Repository
 public interface OrderDetailsRepo extends JpaRepository<OrderDetails, Long> {
 
-	// những câu query insert, update, delte thêm @modifying
+	// những câu query insert, update, delete thêm @modifying
 	@Modifying(clearAutomatically = true)
 	@Query(value = "INSERT INTO order_details(orderId, productId,price,quantity)"
 			+ " VALUES (:#{#dto.orderId}, :#{#dto.productId}, :#{#dto.price}, :#{#dto.quantity})", nativeQuery = true)

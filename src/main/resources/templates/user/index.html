@@ -21,7 +21,8 @@
     
     <!-- Font Awesome -->
     <link rel="stylesheet" th:href="@{/user/css/font-awesome.min.css}">
-    
+    <!-- icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" th:href="@{/user/css/owl.carousel.css}">
     <link rel="stylesheet" th:href="@{/user/style.css}">
@@ -36,8 +37,8 @@
     <![endif]-->
   </head>
   <body>
-   <th:block th:include="user/fragments/header"></th:block>
-    
+
+    <th:block th:include="user/fragments/header"></th:block>
     <div class="product-big-title-area">
         <div class="container">
             <div class="row">
@@ -49,12 +50,12 @@
             </div>
         </div>
     </div>
-    
     <div class="single-product-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container">
+      <div class="zigzag-bottom"></div>
+      <div class="container">
+        <div class="col-sm-9">
             <div class="row">
-                <div class="col-md-3 col-sm-6" th:each=" product : ${products}">
+                <div class="col-md-4 col-sm-6" th:each=" product : ${products}">
                     <div class="single-shop-product">
                         <div class="product-upper"  >                   
                         <img th:src="@{'/user/img/' + ${product.imgUrl}}" />
@@ -63,17 +64,15 @@
                         <div class="product-carousel-price">
                             <ins th:text="${#numbers.formatCurrency(product.price)}" ></ins>
                         </div>  
-               
                         <div class="product-option-shop" >
                             <button class="add_to_cart_button" 
-                            	data-quantity="1" data-product_sku="" 
-                            	data-product_id="70" rel="nofollow"
-                            	th:attr="onclick='addToCart(\'' + ${product.id} + '\')'" >Add to cart</button>
+                              data-quantity="1" data-product_sku="" 
+                              data-product_id="70" rel="nofollow"
+                              th:attr="onclick='addToCart(\'' + ${product.id} + '\')'" >Add to cart</button>
                         </div>     
                     </div>
                 </div>
             </div>
-            
             <div class="row" th:if="${totalPages > 1}">
                 <div class="col-md-12">
                     <div class="product-pagination text-center">
@@ -86,7 +85,7 @@
                             </li>
                             <li th:each="i : ${#numbers.sequence(1, totalPages)}"
                                 th:class="${currentPage == i ? 'active' : ''}" >
-                            	<a th:href="@{'?page=' + ${i}}" th:text="${i}"></a>
+                              <a th:href="@{'?page=' + ${i}}" th:text="${i}"></a>
                             </li>
                             <li th:class="${currentPage == totalPages ? 'disabled' : '' }">
                               <a th:href="@{${currentPage < totalPages} ? ${'?page=' + (currentPage + 1)} : ''}" aria-label="Next">
@@ -99,10 +98,18 @@
                 </div>
             </div>
         </div>
-    </div>
+        <div class="col-sm-3">
+          <div class="list-group">
+            <label class="list-group-item list-group-item-action active" aria-current="true">
+             <i class="fa fa-list" aria-hidden="true"></i> Danh sách các loại sản phẩm
+            </label>
+			<a th:each="productType : ${productType}" th:href="@{'/type/' + ${productType.id}}" class="list-group-item list-group-item-action" >[[${productType.name}]]</a>
+          </div>
+        </div>
+      </div>
+  </div>
     
     <th:block th:include="user/fragments/footer"></th:block>
-   
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
     

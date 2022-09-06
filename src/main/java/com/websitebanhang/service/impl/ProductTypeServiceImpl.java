@@ -15,7 +15,6 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 	@Autowired
 	ProductTypeRepo repo;
 	
-
 	@Override
 	public List<ProductTypes> fillAll() {
 		return repo.findAll();

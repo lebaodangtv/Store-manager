@@ -32,6 +32,9 @@ public class ProductTypes implements Serializable {/**
 	private String description;
 	
 	@Column
+	private String name;
+	
+	@Column
 	private String slug;
 	
 	@Column
