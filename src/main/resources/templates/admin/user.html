@@ -188,7 +188,7 @@
 												<td th:text="${user.username}"></td>
 												<td th:text="${user.fullname}"></td>
 												<td th:text="${user.email}"></td>
-												<td><img th:src="@{'/user/img/' + ${user.imgUrl}}" style="height: 50px" /></td>
+												<td><img th:src="@{'/admin/img/' + ${user.imgUrl}}" style="height: 50px" /></td>
 												<td th:text="${user.roles.description}"></td>
 												<td align="center">
 													<button class="btn btn-success"
@@ -263,11 +263,16 @@
 										<div class="card card-primary card-outline">
 											<div class="card-body box-profile">
 												<div class="text-center">
-													<img class="profile-user-img img-fluid img-circle"
+													<img th:if="${userRequest.imgUrl == null}" class="profile-user-img img-fluid img-circle"
 															style="width: 212px; height: 212px"
-															th:src="@{/admin/img/default.png}"
+															th:src="@{'/admin/img/default.png'}"
 															alt="User profile picture"
-															id="userImgUpload">
+															id="userImgUpload" >
+													<img th:if="${userRequest.imgUrl != null}" class="profile-user-img img-fluid img-circle"
+															style="width: 212px; height: 212px"
+															th:src="@{'/admin/img/' + ${userRequest.imgUrl}}"
+															alt="User profile picture"
+															id="userImgUpload" >
 												</div>
 												<br/>
 												<div class="form-group">

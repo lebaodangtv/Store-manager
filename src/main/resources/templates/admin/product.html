@@ -281,12 +281,17 @@
 				
 										<div class="card card-primary card-outline">
 											<div class="card-body box-profile">
-												<div class="text-center">
-													<img class="profile-user-img img-fluid img-circle"
+												<div class="text-center" >
+													<img th:if="${productRequest.imgUrl == null}" 
 															style="width: 212px; height: 212px"
-															th:src="@{/admin/img/default.png}"
+															th:src="@{'/admin/img/defaultProduct.jpg'}"
 															alt="User profile picture"
-															id="userImgUpload">
+															id="userImgUpload" >
+													<img th:if="${productRequest.imgUrl != null}" 
+															style="width: 212px; height: 212px"
+															th:src="@{'/user/img/' + ${productRequest.imgUrl}}"
+															alt="User profile picture"
+															id="userImgUpload" >
 												</div>
 												<br/>
 												<div class="form-group">
