@@ -58,7 +58,7 @@ public class HomeController {
 			products = productService.findAll();
 		}
 		model.addAttribute("products", products);
-		List<ProductTypes> productType = productTypeService.fillAll();
+		List<ProductTypes> productType = productTypeService.findByIsdeleted();
 		model.addAttribute("productType", productType);
 		return "user/index";
 	}
@@ -68,12 +68,12 @@ public class HomeController {
 		if(id.isPresent()) {
 			List<Products> products = productService.productsTypeID(id.get());
 			model.addAttribute("products", products);
-			List<ProductTypes> productType = productTypeService.fillAll();
+			List<ProductTypes> productType = productTypeService.findByIsdeleted();
 			model.addAttribute("productType", productType);
 		}else {
 			List<Products> products = productService.findAll();
 			model.addAttribute("products", products);
-			List<ProductTypes> productType = productTypeService.fillAll();
+			List<ProductTypes> productType = productTypeService.findByIsdeleted();
 			model.addAttribute("productType", productType);
 		}
 		return "user/index";

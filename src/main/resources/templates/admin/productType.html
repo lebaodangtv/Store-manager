@@ -104,7 +104,7 @@
 									class="nav-link"> <i class="far fa-circle nav-icon"></i>
 										<p>Products</p>
 								</a></li>
-								<li class="nav-item"><a href="pages/charts/flot.html"
+								<li class="nav-item"><a th:href="@{/admin/producttype}"
 									class="nav-link"> <i class="far fa-circle nav-icon"></i>
 										<p>ProductTypes</p>
 								</a></li>
@@ -188,11 +188,11 @@
 												<td th:text="${producttype.slug}"></td>
 												<td align="center">
 													<button class="btn btn-success"
-														>
+														th:attr="onclick='editProduct(\'' + ${producttype.name} + '\')'" >
 														<i class="fa fa-edit" aria-hidden="true"></i>
 													</button>
 													<a class="btn btn-danger"
-														>
+														th:href="${'/admin/producttype/delete?productTypeName=' + producttype.name}">
 														<i class="fa fa-trash" aria-hidden="true"></i>
 													</a>
 												</td>
@@ -224,16 +224,16 @@
 			                	<div class="row">
 				                   <div class="col-8">
 					                  <div class="form-group">
-					                    <label for="productName">Product name</label>
+					                    <label for="productType">Product name</label>
 					                    <input type="text" 
-					                    		class="form-control" id="productnameId" readonly="true"
+					                    		class="form-control" id="productTypeId" readonly="true"
 					                    		th:field="*{name}">
 					                  </div>
 					                   <div class="form-group">
-					                    <label for="slug">Description</label>
+					                    <label for=description>Description</label>
 					                    <input type="text" class="form-control" 
-					                    		id="slugId" readonly="true"
-					                    		th:field="*{slug}"  >
+					                    		id="descriptionID" readonly="true"
+					                    		th:field="*{description}"  >
 					                  </div>            
 					                  <div class="form-group">
 					                    <label for="slug">Slug</label>
@@ -278,7 +278,7 @@
 			                <div class="card-footer">
 			                  <button type="button" id="submitCreate" disabled class="btn btn-primary">Create</button>
 			                  <button type="button" id="submitUpdate" th:attr="onclick='submitFormEdit()'" disabled class="btn btn-success">Update</button>
-			                  <a th:href="@{/admin/product}"><button type="button" class="btn btn-warning">Cancel</button></a>
+			                  <a th:href="@{/admin/producttype}"><button type="button" class="btn btn-warning">Cancel</button></a>
 			                </div>
 			              </form>
 			            	
@@ -371,7 +371,7 @@
 			}, 1000);
 			$('#form :input').prop('readonly', false);
 			$('#submitCreate').prop('disabled', false);
-			$('#form').prop('action', '/admin/product/create');
+			$('#form').prop('action', '/admin/producttype/create');
 		});
 		
 		$('#submitCreate').click(function(){
@@ -379,7 +379,7 @@
 		});
 		
 		function editProduct(name) {
-			var url = '/admin/product/edit?productname=' + name;
+			var url = '/admin/producttype/edit?productTypeName=' + name;
 			$.get(url).done(function(data){
 				$('#form').replaceWith(data);
 				$('html, body').animate({
@@ -388,7 +388,7 @@
 				$('#form :input').prop('readonly', false);
 				$('input#username').prop('readonly', true);
 				$('#submitUpdate').prop('disabled', false);
-				$('#form').prop('action', '/admin/product/edit');
+				$('#form').prop('action', '/admin/producttype/edit');
 			});
 		}
 			 

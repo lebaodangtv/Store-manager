@@ -1,7 +1,7 @@
 package com.websitebanhang.controller.admin;
 
-import java.util.List;
 
+import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class ProductsController {
 	public String products(Model model) {
 		List<Products> products = productsService.findAll();
 		model.addAttribute("products",products);
-		List<ProductTypes> productType = productTypes.fillAll();
+		List<ProductTypes> productType = productTypes.findByIsdeleted();
 		model.addAttribute("productTypes",productType);
 		List<UnitTypes> unitType = unitTypesSer.findAll();
 		model.addAttribute("unitTypes",unitType);
@@ -51,10 +51,10 @@ public class ProductsController {
 			RedirectAttributes redirectAttributes) {
 		try {
 			productsService.deleteProduct(name);
-			redirectAttributes.addFlashAttribute("succeedMessage","Product" + name + "was deleted");
+			redirectAttributes.addFlashAttribute("succeedMessage"," Product " + name + " was deleted ");
 		} catch (Exception e) {
 			e.printStackTrace();
-			redirectAttributes.addFlashAttribute("errorMessage","Cannot delete product" + name );
+			redirectAttributes.addFlashAttribute("errorMessage"," Cannot delete product " + name );
 		}
 		return "redirect:/admin/product";
 	}
@@ -63,7 +63,7 @@ public class ProductsController {
 	public String doGetEditProduct(@RequestParam("productname") String productName, Model model) {
 		Products productRequest = productsService.findByName(productName);
 		model.addAttribute("productRequest", productRequest);
-		List<ProductTypes> productType = productTypes.fillAll();
+		List<ProductTypes> productType = productTypes.findByIsdeleted();
 		model.addAttribute("productTypes",productType);
 		List<UnitTypes> unitType = unitTypesSer.findAll();
 		model.addAttribute("unitTypes",unitType);
@@ -79,10 +79,10 @@ public class ProductsController {
 		}else {
 			try {
 				productsService.updateProduct(productRequest);
-				redirectAttributes.addFlashAttribute("succeedMessage", "Product" + productRequest.getName() + "has been edited successfully");
+				redirectAttributes.addFlashAttribute("succeedMessage", " Product " + productRequest.getName() + " has been edited successfully ");
 			} catch (Exception e) {
 				e.printStackTrace();
-				redirectAttributes.addFlashAttribute("errorMessage", "Cannot update product" + productRequest.getName());
+				redirectAttributes.addFlashAttribute("errorMessage", " Cannot update product " + productRequest.getName());
 			}
 		}
 		return "redirect:/admin/product";
@@ -93,10 +93,10 @@ public class ProductsController {
 			RedirectAttributes redirectAttributes) {
 		try {
 			productsService.save(product);
-			redirectAttributes.addFlashAttribute("succeedMessage", "Product" + product.getName() + "was create successfully");
+			redirectAttributes.addFlashAttribute("succeedMessage", " Product " + product.getName() + " was create successfully ");
 		} catch (Exception e) {
 			e.printStackTrace();
-			redirectAttributes.addFlashAttribute("errorMessage", "Cannot create product" + product.getName());
+			redirectAttributes.addFlashAttribute("errorMessage", " Cannot create product " + product.getName());
 		}
 		return "redirect:/admin/product";
 	}

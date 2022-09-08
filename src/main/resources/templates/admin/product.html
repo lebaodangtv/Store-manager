@@ -104,7 +104,7 @@
 									class="nav-link"> <i class="far fa-circle nav-icon"></i>
 										<p>Products</p>
 								</a></li>
-								<li class="nav-item"><a href="pages/charts/flot.html"
+								<li class="nav-item"><a th:href="@{/admin/producttype}"
 									class="nav-link"> <i class="far fa-circle nav-icon"></i>
 										<p>ProductTypes</p>
 								</a></li>
@@ -224,7 +224,7 @@
 			            <!-- general form elements -->
 			            <div class="card card-primary">
 			              <div class="card-header">
-			                <h3 class="card-title">User Details</h3>
+			                <h3 class="card-title">Products</h3>
 			              </div>
 			              <!-- /.card-header -->
 			 
@@ -247,7 +247,7 @@
 					                  </div>
 					                  <div class="form-group">
 					                    <label for="price">Price</label>
-					                    <input type="number" class="form-control" 
+					                    <input type="text" class="form-control" 
 					                    		id="priceId" readonly="true"
 					                    		th:field="*{price}"> 
 					                  </div>					                  

@@ -39,10 +39,10 @@ public class UserController {
 			RedirectAttributes redirectAttributes) {
 		try {
 			userService.deleteLogical(username);
-			redirectAttributes.addFlashAttribute("succeedMessage","User" + username + "was deleted");
+			redirectAttributes.addFlashAttribute("succeedMessage"," User " + username + " was deleted ");
 		} catch (Exception e) {
 			e.printStackTrace();
-			redirectAttributes.addFlashAttribute("errorMessage","Cannot delete user" + username );
+			redirectAttributes.addFlashAttribute("errorMessage"," Cannot delete user " + username );
 		}
 		return "redirect:/admin/user";
 	}
@@ -61,14 +61,14 @@ public class UserController {
 			RedirectAttributes redirectAttributes) {
 		if(bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
-			redirectAttributes.addFlashAttribute("errorMessage","User is not valid");
+			redirectAttributes.addFlashAttribute("errorMessage"," User is not valid ");
 		} else {
 			try {
 				userService.update(userRequest);
-				redirectAttributes.addFlashAttribute("succeedMessage", "User" + userRequest.getUsername() + "has been edited successfully");
+				redirectAttributes.addFlashAttribute("succeedMessage", " User " + userRequest.getUsername() + " has been edited successfully ");
 			} catch (Exception e) {
 				e.printStackTrace();
-				redirectAttributes.addFlashAttribute("errorMessage", "Cannot update user" + userRequest.getUsername());
+				redirectAttributes.addFlashAttribute("errorMessage", " Cannot update user " + userRequest.getUsername());
 			}
 		}
 		return "redirect:/admin/user";
@@ -79,10 +79,10 @@ public class UserController {
 			RedirectAttributes redirectAttributes) {
 		try {
 			userService.save(userRequest);
-			redirectAttributes.addFlashAttribute("succeedMessage", "User" + userRequest.getUsername() + "was create successfully");
+			redirectAttributes.addFlashAttribute("succeedMessage", " User " + userRequest.getUsername() + " was create successfully ");
 		} catch (Exception e) {
 			e.printStackTrace();
-			redirectAttributes.addFlashAttribute("errorMessage", "Cannot create user" + userRequest.getUsername());
+			redirectAttributes.addFlashAttribute("errorMessage", " Cannot create user " + userRequest.getUsername());
 		}
 		return "redirect:/admin/user";
 	}
