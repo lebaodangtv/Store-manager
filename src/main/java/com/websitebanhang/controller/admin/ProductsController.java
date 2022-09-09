@@ -37,7 +37,7 @@ public class ProductsController {
 	public String products(Model model) {
 		List<Products> products = productsService.findAll();
 		model.addAttribute("products",products);
-		List<ProductTypes> productType = productTypes.findByIsdeleted();
+		List<ProductTypes> productType = productTypes.findAll();
 		model.addAttribute("productTypes",productType);
 		List<UnitTypes> unitType = unitTypesSer.findAll();
 		model.addAttribute("unitTypes",unitType);
@@ -63,7 +63,7 @@ public class ProductsController {
 	public String doGetEditProduct(@RequestParam("productname") String productName, Model model) {
 		Products productRequest = productsService.findByName(productName);
 		model.addAttribute("productRequest", productRequest);
-		List<ProductTypes> productType = productTypes.findByIsdeleted();
+		List<ProductTypes> productType = productTypes.findAll();
 		model.addAttribute("productTypes",productType);
 		List<UnitTypes> unitType = unitTypesSer.findAll();
 		model.addAttribute("unitTypes",unitType);

@@ -27,7 +27,7 @@ public class ProductTypeController {
 	
 	@GetMapping("")
 	public String doGetProductType(Model model) {
-		List<ProductTypes> productTypes = productTypeService.findByIsdeleted(); 
+		List<ProductTypes> productTypes = productTypeService.findAll(); 
 		model.addAttribute("productTypes",productTypes);
 		model.addAttribute("productTypeRequest",new ProductTypes());
 		return "admin/productType";

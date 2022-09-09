@@ -19,7 +19,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 	ProductTypeRepo repo;
 	
 	@Override
-	public List<ProductTypes> findByIsdeleted() {
+	public List<ProductTypes> findAll() {
 		return repo.findByIsDeleted(Boolean.FALSE);
 	}
 

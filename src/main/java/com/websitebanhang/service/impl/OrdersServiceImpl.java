@@ -1,5 +1,7 @@
 package com.websitebanhang.service.impl;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
@@ -25,6 +27,12 @@ public class OrdersServiceImpl implements OrdersService {
 	@Override
 	public Orders insert(Orders orders) {
 		return repo.saveAndFlush(orders);
+	}
+
+
+	@Override
+	public List<Orders> findAll() {
+		return repo.findAll();
 	}
 
 }
