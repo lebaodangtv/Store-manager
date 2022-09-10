@@ -184,8 +184,7 @@
 												<th>Price</th>
 												<th style="width: 80px;">Image</th>
 												<th>Slug</th>
-												<th>Description</th>
-												<th>IsDeleted</th>
+												<th>Description</th>											
 												<th>ProductTypes</th>
 												<th>Action</th>
 											</tr>
@@ -199,8 +198,7 @@
 												<td><img th:src="@{'/user/img/' + ${product.imgUrl}}" style="height: 50px" /></td>
 												<td th:text="${product.slug}"></td>
 												<td th:text="${product.description}"></td>
-												<td th:text="${product.isDeleted ? '' : 'Còn hàng'}"></td>
-												<td th:text="${product.productTypes.id == 1 ? 'DIEN-THOAI' : 'LAPTOP'}"></td>
+												<td th:text="${product.productTypes.name}"></td>
 												<td align="center">
 													<button class="btn btn-success"
 														th:attr="onclick='editProduct(\'' + ${product.name} + '\')'">
@@ -337,11 +335,11 @@
 		<!-- /.content-wrapper -->
 
 		<footer class="main-footer">
-			<strong>Copyright &copy; 2014-2021 <a
-				href="https://adminlte.io">AdminLTE.io</a>.
-			</strong> All rights reserved.
+			<strong> 2022 - <a
+				href="https://adminlte.io">Lê Bảo Đăng</a>.
+			</strong>
 			<div class="float-right d-none d-sm-inline-block">
-				<b>Version</b> 3.1.0
+				<b>Version</b> 1.0
 			</div>
 		</footer>
 
@@ -430,7 +428,7 @@
 					scrollTop: $('#form').offset().top
 				}, 1000);
 				$('#form :input').prop('readonly', false);
-				$('input#username').prop('readonly', true);
+				$('input#productnameId').prop('readonly', true);
 				$('#submitUpdate').prop('disabled', false);
 				$('#form').prop('action', '/admin/product/edit');
 			});
