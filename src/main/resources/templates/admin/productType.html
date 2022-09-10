@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>User</title>
+	<title>ProductType</title>
 	
 	<!-- Google Font: Source Sans Pro -->
 	<link rel="stylesheet"
@@ -11,6 +11,7 @@
 	<!-- Font Awesome -->
 	<link rel="stylesheet"
 		th:href="@{/admin/plugins/fontawesome-free/css/all.min.css}">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<!-- Ionicons -->
 	<link rel="stylesheet"
 		href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -86,15 +87,14 @@
 						<!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 						<li class="nav-item"><a th:href="@{/admin}" class="nav-link">
-								<i class="nav-icon fas fa-th"></i>
+								<i class="fa fa-home" aria-hidden="true"></i>
 								<p>Home</p>
 						</a></li>
 						<li class="nav-item"><a th:href="@{/admin/user}"
-							class="nav-link active"> <i class="nav-icon fas fa-copy"></i>
+							class="nav-link active"> <i class="fa fa-user-circle" aria-hidden="true"></i>
 								<p>Users</p>
 						</a></li>
-						<li class="nav-item"><a href="#" class="nav-link"> <i
-								class="nav-icon fas fa-chart-pie"></i>
+						<li class="nav-item"><a href="#" class="nav-link"> <i class="fa fa-product-hunt" aria-hidden="true"></i>
 								<p>
 									Products <i class="right fas fa-angle-left"></i>
 								</p>
@@ -109,23 +109,12 @@
 										<p>ProductTypes</p>
 								</a></li>
 							</ul></li>
-						<li class="nav-item">
-				            <a href="#" class="nav-link">
-				              <i class="nav-icon fas fa-tree"></i>
-				              <p>
-				                Orders
-				                <i class="fas fa-angle-left right"></i>
-				              </p>
-				            </a>
-				            <ul class="nav nav-treeview">
-				              <li class="nav-item">
-				                <a  th:href="@{/admin/order}" class="nav-link">
-				                  <i class="far fa-circle nav-icon"></i>
-				                  <p>Orders</p>
-				                </a>
-				              </li>
-            </ul>
-          </li>
+							<li class="nav-item">
+								<a  th:href="@{/admin/order}" class="nav-link">
+									<i class="fa fa-first-order" aria-hidden="true"></i>
+									<p>Orders</p>
+								 </a>
+							</li>
 					</ul>
 				</nav>
 				<!-- /.sidebar-menu -->
