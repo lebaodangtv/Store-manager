@@ -224,7 +224,7 @@
 												<td th:text="${orderdetail.orders.createdDate}"></td>
 												<td th:text="${orderdetail.products.name}"></td>
 												<td th:text="${orderdetail.quantity}"></td>
-												<th th:text="${orderdetail.price}"></th>
+												<th th:text="${#numbers.formatCurrency(orderdetail.price)}"></th>
 											</tr>
 										</tbody>
 									</table>
