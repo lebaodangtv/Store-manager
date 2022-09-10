@@ -91,10 +91,10 @@
 								<p>Home</p>
 						</a></li>
 						<li class="nav-item"><a th:href="@{/admin/user}"
-							class="nav-link active"> <i class="fa fa-user-circle" aria-hidden="true"></i>
+							class="nav-link "> <i class="fa fa-user-circle" aria-hidden="true"></i>
 								<p>Users</p>
 						</a></li>
-						<li class="nav-item"><a href="#" class="nav-link"> <i class="fa fa-product-hunt" aria-hidden="true"></i>
+						<li class="nav-item"><a href="#" class="nav-link active"> <i class="fa fa-product-hunt" aria-hidden="true"></i>
 								<p>
 									Products <i class="right fas fa-angle-left"></i>
 								</p>
@@ -235,36 +235,6 @@
 					                    		id="slugId" readonly="true"
 					                    		th:field="*{slug}"  >
 					                  </div>					             
-									</div>
-									<div class="col-4">
-										<!-- Profile Image -->
-				
-										<div class="card card-primary card-outline">
-											<div class="card-body box-profile">
-												<div class="text-center">
-													<img 
-															style="width: 212px; height: 212px"
-															th:src="@{'/admin/img/defaultProduct.jpg'}"
-															alt="User profile picture"
-															id="userImgUpload">
-												</div>
-												<br/>
-												<div class="form-group">
-                    								<label for="inputFile">Avatar</label>
-                   									<div class="input-group">
-                     										<div class="custom-file">
-                       										<input type="file" class="custom-file-input" id="inputFile">
-                       										<label class="custom-file-label" for="inputFile">Choose file</label>
-                     										</div>
-                     										<div class="input-group-append">
-                       										<span class="input-group-text">Upload</span>
-                     										</div>
-                   									</div>
-                  								</div>
-											</div>
-											<!-- /.card-body -->
-										</div>
-										<!-- /.card -->
 									</div>
 				               </div>
 			                </div>

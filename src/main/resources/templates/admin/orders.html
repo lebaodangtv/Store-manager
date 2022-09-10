@@ -91,7 +91,7 @@
 								<p>Home</p>
 						</a></li>
 						<li class="nav-item"><a th:href="@{/admin/user}"
-							class="nav-link active"> <i class="fa fa-user-circle" aria-hidden="true"></i>
+							class="nav-link"> <i class="fa fa-user-circle" aria-hidden="true"></i>
 								<p>Users</p>
 						</a></li>
 						<li class="nav-item"><a href="#" class="nav-link"> <i class="fa fa-product-hunt" aria-hidden="true"></i>
@@ -110,7 +110,7 @@
 								</a></li>
 							</ul></li>
 							<li class="nav-item">
-								<a  th:href="@{/admin/order}" class="nav-link">
+								<a  th:href="@{/admin/order}" class="nav-link active">
 									<i class="fa fa-first-order" aria-hidden="true"></i>
 									<p>Orders</p>
 								 </a>
@@ -297,7 +297,6 @@
 		      	"buttons": ["csv", "excel", "pdf", "print"]
 		    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 		 });
-		
 		
 		function editOrderID(name) {
 			var url = '/admin/order/orderdetail?orderDetailID=' + name;
