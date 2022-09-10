@@ -1,5 +1,7 @@
 package com.websitebanhang.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,5 +19,9 @@ public interface OrderDetailsRepo extends JpaRepository<OrderDetails, Long> {
 	@Query(value = "INSERT INTO order_details(orderId, productId,price,quantity)"
 			+ " VALUES (:#{#dto.orderId}, :#{#dto.productId}, :#{#dto.price}, :#{#dto.quantity})", nativeQuery = true)
 	void insert(@Param("dto") CartDetailDto cartDetailDto);
+	
+	
+	@Query(value = "SELECT * FROM order_details WHERE orderId = ?1", nativeQuery = true)
+	List<OrderDetails> findByOrderID(Long id);
 	
 }

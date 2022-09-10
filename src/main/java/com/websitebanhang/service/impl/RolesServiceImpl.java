@@ -15,7 +15,6 @@ public class RolesServiceImpl implements RolesService {
 	
 	@Override
 	public Roles findByDescription(String description) {
-		// TODO Auto-generated method stub
 		return rolesRepo.findByDescription(description);
 	}
 	

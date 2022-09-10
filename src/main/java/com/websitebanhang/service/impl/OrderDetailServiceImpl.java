@@ -1,5 +1,7 @@
 package com.websitebanhang.service.impl;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
@@ -7,11 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.websitebanhang.dto.CartDetailDto;
+import com.websitebanhang.entitys.OrderDetails;
+
 import com.websitebanhang.repository.OrderDetailsRepo;
 import com.websitebanhang.service.OrderDetailService;
 
 @Service
-public class OrderDetailImpl implements OrderDetailService {
+public class OrderDetailServiceImpl implements OrderDetailService {
 
 	@Autowired
 	private OrderDetailsRepo repo;
@@ -22,4 +26,8 @@ public class OrderDetailImpl implements OrderDetailService {
 		repo.insert(cartDetailDto);
 	}
 
+	@Override
+	public List<OrderDetails> findByOrderID(Long id) {
+		return repo.findByOrderID(id);
+	}
 }
