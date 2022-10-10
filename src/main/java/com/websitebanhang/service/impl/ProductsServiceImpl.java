@@ -63,6 +63,11 @@ public class ProductsServiceImpl implements ProductsService {
 			throw new Exception("Page number must be greater than 0");
 		}
 	}
+	
+	@Override
+	public Products findByName(String name) {
+		return repo.findByName(name);
+	}
 
 	@Override
 	@Transactional(rollbackOn = {Exception.class, Throwable.class})
@@ -77,11 +82,6 @@ public class ProductsServiceImpl implements ProductsService {
 		if(ObjectUtils.isNotEmpty(product)) {
 			repo.updateProduct(product.getProductTypes().getId(), product.getQuantity(), product.getPrice(), product.getUnitTypes().getId(),product.getImgUrl(), product.getDescription(), product.getSlug(), product.getName());
 		}
-	}
-
-	@Override
-	public Products findByName(String name) {
-		return repo.findByName(name);
 	}
 
 	@Override

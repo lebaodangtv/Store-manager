@@ -8,4 +8,5 @@ import com.websitebanhang.entitys.OrderDetails;
 public interface OrderDetailService {
 	void insert(CartDetailDto cartDetailDto);
 	List<OrderDetails> findByOrderID(Long id);
+	Double orderDetailsSumPrice(Long orderId);
 }

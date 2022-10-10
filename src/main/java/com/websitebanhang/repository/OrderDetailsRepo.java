@@ -20,8 +20,10 @@ public interface OrderDetailsRepo extends JpaRepository<OrderDetails, Long> {
 			+ " VALUES (:#{#dto.orderId}, :#{#dto.productId}, :#{#dto.price}, :#{#dto.quantity})", nativeQuery = true)
 	void insert(@Param("dto") CartDetailDto cartDetailDto);
 	
-	
 	@Query(value = "SELECT * FROM order_details WHERE orderId = ?1", nativeQuery = true)
 	List<OrderDetails> findByOrderID(Long id);
+	
+	@Query(value = "SELECT sum(price) FROM order_details WHERE orderId = ?1", nativeQuery = true)
+	Double orderDetailSumPrice(Long orderId);
 	
 }

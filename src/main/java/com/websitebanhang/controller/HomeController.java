@@ -110,7 +110,7 @@ public class HomeController {
 				return "redirect:/index";
 			} else {
 				return "redirect:/register";
-			}
+			} 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return "redirect:/register";

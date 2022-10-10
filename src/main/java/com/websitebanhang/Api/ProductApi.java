@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.websitebanhang.entitys.Products;
 import com.websitebanhang.service.ProductsService;
 
-// trả ra dạng dữ liệu JSON
 @RestController
 // endpoint nơi cung cấp các API liên quan đến product
 @RequestMapping("/v1/api/products")

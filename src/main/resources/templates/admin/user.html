@@ -219,7 +219,7 @@
 			              </div>
 			              <!-- /.card-header -->
 			              <!-- form start -->
-			              <form id="form" method="POST" th:object="${userRequest}">
+			              <form id="form" method="POST" th:object="${userRequest}" enctype="multipart/form-data">
 			                <div class="card-body">
 			                	<div class="row">
 				                   <div class="col-8">
@@ -276,7 +276,7 @@
                     								<label for="inputFile">Avatar</label>
                    									<div class="input-group">
                      										<div class="custom-file">
-                       										<input type="file" class="custom-file-input" id="inputFile">
+                       										<input type="file" class="custom-file-input" id="inputFile" name="image">
                        										<label class="custom-file-label" for="inputFile">Choose file</label>
                      										</div>
                      										<div class="input-group-append">

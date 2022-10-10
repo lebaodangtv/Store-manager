@@ -30,4 +30,11 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	public List<OrderDetails> findByOrderID(Long id) {
 		return repo.findByOrderID(id);
 	}
+
+	@Override
+	public Double orderDetailsSumPrice(Long orderId) {
+		return repo.orderDetailSumPrice(orderId);
+	}
+
+	
 }

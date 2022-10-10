@@ -35,6 +35,8 @@ public class OrdersController {
 	public String doGetOrderDetail(Model model, @RequestParam("orderDetailID") Long orderDetailID) {
 		List<OrderDetails> orderdetail = orderDetailService.findByOrderID(orderDetailID);
 		model.addAttribute("orderdetail",orderdetail);
+		Double orderDetailSumPrice = orderDetailService.orderDetailsSumPrice(orderDetailID);
+		model.addAttribute("orderDetailSumPrice",orderDetailSumPrice);
 		return "/admin/orders :: #example2";
 	}
 	

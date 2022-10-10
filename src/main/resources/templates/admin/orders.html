@@ -156,7 +156,7 @@
 										<thead>
 											<tr>
 												<th></th>
-												<th>User Name</th>
+												<th>UserID</th>
 												<th>Address</th>
 												<th>Phone</th>
 												<th>CreatedDate</th>				
@@ -166,7 +166,7 @@
 										<tbody>
 											<tr th:each="order, index : ${order}">
 												<td th:text="${index.index + 1}"></td>
-												<td th:text="${order.user.username}"></td>
+												<td th:text="${order.user.id}"></td>
 												<td th:text="${order.address}"></td>
 												<td th:text="${order.phone}"></td>
 												<td th:text="${order.createdDate}"></td>
@@ -191,15 +191,17 @@
 				</div>
 			</section>
 			<!-- Chi tiết -->
-			<section class="content">
+			<section id="example2" class="content">
 				<div class="container-fluid">
-				<label>Chi Tiết Hóa Đơn</label>
+				<label>Chi Tiết Hóa Đơn</label> <br>
+				<label>Tổng giá tiền:</label>
+				<label th:text="${#numbers.formatCurrency(orderDetailSumPrice)}"></label> 
 					<div class="row">
 						<div class="col-12">
 							<div class="card">
 								<!-- /.card-header -->
 								<div class="card-body">
-									<table id="example2" class="table table-bordered table-striped">
+									<table class="table table-bordered table-striped"> 
 										<thead>
 											<tr>
 												<th></th>
@@ -239,7 +241,6 @@
 			<!-- /.content -->
 		</div>
 		<!-- /.content-wrapper -->
-		
 		<footer class="main-footer">
 			<strong> 2022 - <a
 				href="https://adminlte.io">Lê Bảo Đăng</a>.
@@ -248,7 +249,6 @@
 				<b>Version</b> 1.0
 			</div>
 		</footer>
-
 		<!-- Control Sidebar -->
 		<aside class="control-sidebar control-sidebar-dark">
 			<!-- Control sidebar content goes here -->

@@ -50,7 +50,6 @@ public class CartApi {
 		if(ObjectUtils.isEmpty(currentUser)) {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); //401 tài khoản chưa được xác thực
 		}
-		
 		// insert
 		CartDto currentCart = SessionUtil.getCurrentCart(session);
 		try {

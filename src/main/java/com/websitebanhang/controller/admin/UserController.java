@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.websitebanhang.entitys.Users;
@@ -75,7 +76,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/create")
-	public String doPostUserRequest(@ModelAttribute("userRequest") Users userRequest,
+	public String doPostUserRequest(@ModelAttribute("userRequest") Users userRequest,@RequestParam("image") MultipartFile file,
 			RedirectAttributes redirectAttributes) {
 		try {
 			userService.save(userRequest);
