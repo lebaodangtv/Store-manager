@@ -9,35 +9,36 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "product_types")
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductTypes implements Serializable {/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5735279774288728642L;
+	static final long serialVersionUID = -5735279774288728642L;
 	
 	@Id
 	@GeneratedValue(strategy =  GenerationType.IDENTITY)
 	@Column
-	private Long id;
+	Long id;
 	
 	@Column
-	private String description;
+	String description;
 	
 	@Column
-	private String name;
+	String name;
 	
 	@Column
-	private String slug;
+	String slug;
 	
 	@Column
-	private Boolean isDeleted;
+	Boolean isDeleted;
 	
 }

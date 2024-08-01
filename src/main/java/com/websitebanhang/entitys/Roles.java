@@ -9,25 +9,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "roles")
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Roles implements Serializable {/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5175438623266778535L;
+	static final long serialVersionUID = 5175438623266778535L;
 	
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column
-	private Long id;
+	Long id;
 	
 	@Column
-	private String description;
+	String description;
 }

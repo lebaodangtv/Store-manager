@@ -12,41 +12,41 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table (name = "orders")
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Orders implements Serializable{/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7299495314531191391L;
+	static final long serialVersionUID = 7299495314531191391L;
 	
 	@Id
 	@Column
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private Long id;
+	Long id;
 	
 	@Column
-	private String address;
+	String address;
 	
 	@Column
-	private String phone;
+	String phone;
 	
 	@Column
 	@CreationTimestamp
-	private Timestamp createdDate;
+	Timestamp createdDate;
 	
 	@ManyToOne
 	@JsonIgnoreProperties(value = {"applications","hibernateLazyInitializer"})
 	@JoinColumn(name ="userId", referencedColumnName = "id")
-	private Users user;
+	Users user;
 }

@@ -3,6 +3,7 @@ package com.websitebanhang.repository;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -43,4 +44,9 @@ public interface ProductsRepo extends JpaRepository<Products, Long> {
 	@Modifying(clearAutomatically = true)
 	@Query(value = "UPDATE products SET isDeleted = 1 WHERE name = ?1", nativeQuery = true)
 	void deleteProduct(String name);
+
+	@Query(value = "select pr.name as name,pr.price as price, pr.name as nameType  from products pr " +
+			"left join product_types pt " +
+			"on pt.id = pr.typeId", nativeQuery = true)
+    Page<Object[]> productType(PageRequest page);
 }

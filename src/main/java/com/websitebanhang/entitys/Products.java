@@ -13,55 +13,56 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "products")
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Products implements Serializable {/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6646282159245954737L;
+	static final long serialVersionUID = -6646282159245954737L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
-	private Long id;
+	Long id;
 	
 	@Column
-	private String name;
+	String name;
 	
 	@Column 
-	private Integer quantity;
+	Integer quantity;
 
 	@Column
-	private Double price;
+	Double price;
 	
 	@Column
-	private String imgUrl;
+	String imgUrl;
 	
 	@Column
-	private String slug;
+	String slug;
 	
 	@Column
-	private String description;
+	String description;
 	
 	@Column
-	private Boolean isDeleted;
+	Boolean isDeleted;
 	
 	@ManyToOne
 	@JsonIgnoreProperties (value = {"applications", "hibernateLazyInitializer"})
 	@JoinColumn(name = "typeId", referencedColumnName = "id")
-	private ProductTypes productTypes;
+	ProductTypes productTypes;
 	
 	@ManyToOne
 	@JsonIgnoreProperties (value = {"applications", "hibernateLazyInitializer"})
 	@JoinColumn(name = "unitId", referencedColumnName = "id")
-	private UnitTypes unitTypes;
+	UnitTypes unitTypes;
 	
 }
 

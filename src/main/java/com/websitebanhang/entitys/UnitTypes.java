@@ -9,29 +9,30 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "unit_types")
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UnitTypes implements Serializable {/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2941540802161338723L;
+	static final long serialVersionUID = 2941540802161338723L;
 	
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY )
 	@Column
-	private Long id;
+	Long id;
 	
 	@Column
-	private String description;
-	
+	String description;
+
 	@Column
-	private Boolean isDeleted;
+	Boolean isDeleted;
 	
 }
