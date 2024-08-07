@@ -33,6 +33,11 @@ public class GenerateToken {
     @Value("${jwt.signerKey}")
     private String key;
 
+    /**
+     * tạo token có phân quyền
+     * @param user
+     * @return
+     */
     public String generateToken(Users user){
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512 );
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
@@ -56,6 +61,11 @@ public class GenerateToken {
         }
     }
 
+    /**
+     * lấy ra role của người dùng để tạo quyền truy cập cho token
+     * @param users
+     * @return
+     */
     private String buildScope(Users users){
         String roles = "";
         if(users.getRoles() != null){
@@ -64,6 +74,13 @@ public class GenerateToken {
         return roles;
     }
 
+    /**
+     * kiểm tra token
+     * @param request
+     * @return
+     * @throws JOSEException
+     * @throws ParseException
+     */
     public IntrospectRespponse introspectRespponse(IntrospectRequest request) throws JOSEException, ParseException {
         var token = request.getToken();
         JWSVerifier verifier = new MACVerifier(key.getBytes());

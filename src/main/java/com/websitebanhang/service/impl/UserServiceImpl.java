@@ -8,6 +8,8 @@ import jakarta.transaction.Transactional;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -54,7 +56,6 @@ public class UserServiceImpl implements UsersService {
 		/* sao khi thực hiện xong các bước thì gán data vào users*/
 		return userRepo.saveAndFlush(users);
 	}
-
 	@Override
 	public List<Users> findAll() {
 		return userRepo.findByIsDeleted(Boolean.FALSE);
