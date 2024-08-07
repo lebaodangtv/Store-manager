@@ -6,15 +6,16 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 import java.util.Date;
 
 public class JwtTokenProvider {
-    private final SecretKey secretKey;
+    private final SecretKey secretKeySpec;
 
     public JwtTokenProvider(String base64SecretKey) {
         byte[] keyBytes = Base64.getDecoder().decode(base64SecretKey);
-        this.secretKey = Keys.hmacShaKeyFor(keyBytes);
+        this.secretKeySpec = new SecretKeySpec(keyBytes, SignatureAlgorithm.HS512.getJcaName());
     }
 
     public String createToken(String username) {
@@ -22,13 +23,13 @@ public class JwtTokenProvider {
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 3600000)) // 1 hour
-                .signWith(secretKey, SignatureAlgorithm.HS512)
+                .signWith(secretKeySpec, SignatureAlgorithm.HS512)
                 .compact();
     }
 
     public Claims getClaims(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(secretKey)
+                .setSigningKey(secretKeySpec)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -37,7 +38,7 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
-                    .setSigningKey(secretKey)
+                    .setSigningKey(secretKeySpec)
                     .build()
                     .parseClaimsJws(token);
             return true;

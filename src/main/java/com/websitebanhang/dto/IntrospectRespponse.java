@@ -1,4 +1,4 @@
-package com.websitebanhang.api.admin;
+package com.websitebanhang.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LoginRequest {
-    private String username;
-    private String password;
+public class IntrospectRespponse {
+   boolean valid;
 }
-
