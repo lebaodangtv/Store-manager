@@ -23,9 +23,9 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-    @Autowired
     private CustomUserDetailsService customUserDetailsService;
+    @Autowired
+    private GenerateToken generateToken;
 
 
     @PostMapping("/login")
@@ -35,11 +35,8 @@ public class AuthenticationController {
         );
         Users userDetails = customUserDetailsService.users(loginRequest.getUsername());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-//        String token = jwtTokenProvider.createToken(loginRequest.getUsername());
-        return ApiResponse.builder().data(LoginResponse.builder().token(GenerateToken.generateToken(loginRequest.getUsername()))
-                .username(userDetails.getUsername())
-                .email(userDetails.getUsername())
-                .fullName(userDetails.getFullname())
+        return ApiResponse.builder().data(LoginResponse.builder()
+                .token(generateToken.generateToken(userDetails))
                 .build()).message("Thành công").code(200).build();
     }
 }

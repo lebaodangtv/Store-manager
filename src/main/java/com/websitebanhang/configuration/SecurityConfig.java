@@ -24,18 +24,22 @@ import javax.crypto.SecretKey;
 @EnableWebSecurity
 public class SecurityConfig {
 
-
     @Value("${jwt.signerKey}")
     private String key;
 
     private final String[] PUBLIC_ENDPOINT_GET = {"/v1/api/products"};
     private final String[] PUBLIC_ENDPOINT_POST = {"/user/create", "/auth/login", "/user/introspect-request"};
 
+    private final String[] PRIVATE_ENDPOINT_ADMIN_GET = {"/user/find"};
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(request ->
                         request.requestMatchers(HttpMethod.GET, PUBLIC_ENDPOINT_GET).permitAll()
                                 .requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINT_POST).permitAll()
+                                .requestMatchers(HttpMethod.GET,PRIVATE_ENDPOINT_ADMIN_GET).hasAnyAuthority(
+                                        "SCOPE_ADMIN"
+                                )
                                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 ->
