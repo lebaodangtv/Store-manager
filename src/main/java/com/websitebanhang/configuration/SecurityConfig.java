@@ -22,7 +22,7 @@ public class SecurityConfig {
     @Value("${jwt.signerKey}")
     private String key;
 
-    private final String [] PUBLIC_ENDPOINT = {"/v1/api/products"};
+    private final String [] PUBLIC_ENDPOINT = {"/v1/api/products", "/user/find"};
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.authorizeHttpRequests(request ->

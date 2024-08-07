@@ -1,4 +1,4 @@
-package com.websitebanhang.Api;
+package com.websitebanhang.api;
 
 import com.websitebanhang.constant.ApiResponse;
 import com.websitebanhang.entitys.Products;
