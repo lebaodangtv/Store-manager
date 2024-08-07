@@ -22,11 +22,13 @@ public class SecurityConfig {
     @Value("${jwt.signerKey}")
     private String key;
 
-    private final String [] PUBLIC_ENDPOINT = {"/v1/api/products", "/user/find"};
+    private final String [] PUBLIC_ENDPOINT_GET = {"/v1/api/products", "/user/find"};
+    private final String [] PUBLIC_ENDPOINT_POST = {"/user/create"};
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.authorizeHttpRequests(request ->
-            request.requestMatchers(HttpMethod.GET,PUBLIC_ENDPOINT).permitAll()
+            request.requestMatchers(HttpMethod.GET,PUBLIC_ENDPOINT_GET).permitAll()
+                    .requestMatchers(HttpMethod.POST,PUBLIC_ENDPOINT_POST).permitAll()
                     .anyRequest().authenticated()
         );
         http.oauth2ResourceServer(oauth2 ->
