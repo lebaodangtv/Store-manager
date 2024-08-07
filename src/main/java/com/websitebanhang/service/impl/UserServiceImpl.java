@@ -3,8 +3,8 @@ package com.websitebanhang.service.impl;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.transaction.Transactional;
 
+import jakarta.transaction.Transactional;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
