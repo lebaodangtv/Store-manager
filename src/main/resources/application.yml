@@ -1,0 +1,43 @@
+# ======================
+# DATASOURCE
+# ======================
+
+# Set here configurations for the database connection
+
+server:
+  port: 8080
+
+  #  Connection url for the database
+spring:
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://localhost:1433;databaseName=mockproject_t6_2022;encrypt=true;trustServerCertificate=true;
+    username: sa
+    password: 123456
+    dbcp2:
+      test-while-idle: true
+      validation-query: SELECT 1
+
+jwt:
+  signerKey: "d2ViU2VjdXJpdHkzMDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MA=="  # Khóa bí m?t dùng ?? ký JWT
+
+
+  # ===================
+  # JPA / HIBERNATE
+  # ===================
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      dialect: org.hibernate.dialect.SQLServer2012Dialect
+
+  servlet:
+    session:
+      cookie:
+        http-only: true
+      tracking-modes: cookie
+
+
+
