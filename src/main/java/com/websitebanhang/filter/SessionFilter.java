@@ -23,18 +23,17 @@ public class SessionFilter implements Filter {
 	 * servletRequest không có session trong đó phải parst sang httpServletRequest
 	 * để sài session
 	 */
-//	@Override
-//	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-//			throws IOException, ServletException {
-//		HttpServletRequest httpRequest = (HttpServletRequest) request;
-//		// lấy ra session
-//		HttpSession session = httpRequest.getSession();
-//		validateCart(session);
-//		chain.doFilter(request, response);
-//	}
+
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		// lấy ra session
+		HttpSession session = httpRequest.getSession();
+		validateCart(session);
+		chain.doFilter(request, response);
+	}
 
 	private void validateCart(HttpSession session) {
-		// kiểm tra trong session có giỏ hàng chưa
 		if (ObjectUtils.isEmpty(session.getAttribute(SessionConstant.CURRENT_CART))) {
 			session.setAttribute(SessionConstant.CURRENT_CART, new CartDto());
 		}
