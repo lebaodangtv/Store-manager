@@ -24,8 +24,8 @@ public class Users implements Serializable {/**
 	static final long serialVersionUID = -7866646107417363856L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long id;
+	@GeneratedValue(strategy = GenerationType.UUID)
+	String name;
 	
 	@Column
 	@Size(max = 20, message = "Username must be less than 20 characters")

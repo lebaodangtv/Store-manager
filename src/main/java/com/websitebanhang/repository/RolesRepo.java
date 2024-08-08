@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.websitebanhang.entitys.Roles;
 
 @Repository
-public interface RolesRepo extends JpaRepository<Roles, Long>{
+public interface RolesRepo extends JpaRepository<Roles, String>{
 	Roles findByDescription(String description);
 }

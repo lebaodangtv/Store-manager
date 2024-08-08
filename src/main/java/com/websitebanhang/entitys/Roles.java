@@ -21,13 +21,13 @@ public class Roles implements Serializable {/**
 	static final long serialVersionUID = 5175438623266778535L;
 	
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@GeneratedValue (strategy = GenerationType.UUID)
 	@Column
-	Long id;
+	String name;
 	
 	@Column
 	String description;
 
 	@ManyToMany
-	Set<Permission> permissionSet;
+	Set<Permission> permission;
 }

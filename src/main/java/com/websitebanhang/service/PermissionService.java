@@ -7,5 +7,5 @@ public interface PermissionService {
 
     Object find(Integer page, Integer limit);
 
-    Object delete(Long id);
+    Object delete(String name);
 }

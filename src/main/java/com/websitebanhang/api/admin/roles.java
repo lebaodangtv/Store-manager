@@ -37,12 +37,12 @@ public class roles {
     }
 
     @PostMapping("/delete")
-    public ApiResponse delete(@RequestParam(value = "id", required = true) Long id){
+    public ApiResponse delete(@RequestParam(value = "id", required = true) String name){
         return ApiResponse
                 .builder()
                 .code(200)
                 .message("Delete thành công!")
-                .data(rolesService.delete(id))
+                .data(rolesService.delete(name))
                 .build();
     }
 

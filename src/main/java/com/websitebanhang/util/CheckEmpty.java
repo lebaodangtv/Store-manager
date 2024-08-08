@@ -1,4 +1,4 @@
-package com.websitebanhang.enums;
+package com.websitebanhang.util;
 
 public class CheckEmpty {
     public static String checkStr(Object o){

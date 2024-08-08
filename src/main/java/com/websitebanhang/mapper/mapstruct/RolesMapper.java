@@ -15,8 +15,8 @@ public interface RolesMapper {
      * @param rolesRequest
      * @return
      */
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "name", ignore = true)
     Roles toEntity(RolesRequest rolesRequest);
-
+    @Mapping(target = "name", ignore = true)
     RolesReponse toDto(Roles roles);
 }
