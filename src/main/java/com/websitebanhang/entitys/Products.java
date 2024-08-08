@@ -56,6 +56,9 @@ public class Products implements Serializable {/**
 	@JsonIgnoreProperties (value = {"applications", "hibernateLazyInitializer"})
 	@JoinColumn(name = "unitId", referencedColumnName = "id")
 	UnitTypes unitTypes;
+
+	@OneToOne(mappedBy = "products", cascade = CascadeType.ALL, orphanRemoval = true)
+	ProductDetail productDetail;
 	
 }
 

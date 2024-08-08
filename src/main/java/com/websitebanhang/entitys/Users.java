@@ -53,5 +53,8 @@ public class Users implements Serializable {/**
 
 	@ManyToMany
 	Set<Roles> roles;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	Set<Orders> orders;
 	
 }
