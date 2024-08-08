@@ -1,25 +1,25 @@
 package com.websitebanhang.api.admin;
 
 import com.websitebanhang.constant.ApiResponse;
-import com.websitebanhang.dto.reponse.PermissionRequest;
-import com.websitebanhang.service.PermissionService;
+import com.websitebanhang.dto.reponse.RolesRequest;
+import com.websitebanhang.service.RolesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/permission")
-public class Permission {
+@RequestMapping("/roles")
+public class roles {
 
     @Autowired
-    PermissionService permissionService;
+    private RolesService rolesService;
 
     @PostMapping("/create")
-    public ApiResponse create(@RequestBody PermissionRequest permissionRequest){
+    public ApiResponse create(@RequestBody RolesRequest rolesRequest){
         return ApiResponse
                 .builder()
                 .code(200)
                 .message("Tạo thành công!")
-                .data(permissionService.create(permissionRequest))
+                .data(rolesService.create(rolesRequest))
                 .build();
     }
 
@@ -31,8 +31,8 @@ public class Permission {
         return ApiResponse
                 .builder()
                 .code(200)
-                .message("Truy vấn thành công!")
-                .data(permissionService.find(page,limit))
+                .message("Tạo thành công!")
+                .data(rolesService.find(page,limit))
                 .build();
     }
 
@@ -42,7 +42,7 @@ public class Permission {
                 .builder()
                 .code(200)
                 .message("Delete thành công!")
-                .data(permissionService.delete(id))
+                .data(rolesService.delete(id))
                 .build();
     }
 
