@@ -2,8 +2,8 @@ package com.websitebanhang.api.admin;
 
 import com.websitebanhang.configuration.GenerateToken;
 import com.websitebanhang.constant.ApiResponse;
-import com.websitebanhang.dto.LoginRequest;
-import com.websitebanhang.dto.LoginResponse;
+import com.websitebanhang.dto.request.LoginRequest;
+import com.websitebanhang.dto.reponse.LoginResponse;
 import com.websitebanhang.entitys.Users;
 import com.websitebanhang.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;

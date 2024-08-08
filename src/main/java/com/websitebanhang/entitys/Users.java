@@ -2,6 +2,7 @@ package com.websitebanhang.entitys;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Set;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -9,8 +10,6 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Data
@@ -51,10 +50,8 @@ public class Users implements Serializable {/**
 	String imgUrl;
 
 	Boolean isDeleted;
-	
-	@ManyToOne
-	@JsonIgnoreProperties (value = {"applications", "hibernateLazyInitializer"})
-	@JoinColumn(name = "roleId", referencedColumnName = "id")
-	Roles roles;
+
+	@ManyToMany
+	Set<Roles> roles;
 	
 }
