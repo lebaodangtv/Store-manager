@@ -82,7 +82,7 @@ public class GenerateToken {
 
         if(!CollectionUtils.isEmpty(users.getRoles())){
             users.getRoles().forEach(role -> {
-                stringJoiner.add(role.getName());
+                stringJoiner.add("ROLE_" + role.getName());
                 if(!CollectionUtils.isEmpty(role.getPermission()))
                     role.getPermission().forEach(permission -> {
                         stringJoiner.add(permission.getName());

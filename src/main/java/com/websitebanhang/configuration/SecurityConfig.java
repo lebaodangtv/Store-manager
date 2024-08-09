@@ -25,10 +25,11 @@ import javax.crypto.SecretKey;
 /**
  * cấu hình security trên method
  * @EnableMethodSecurity
- * @PreAuthorize("hasAnyRole('ADMIN')")
+ * @PreAuthorize("hasAnyRole('ADMIN')") mặc định là ROLE_
  * @PostAuthorize("returnObject.username == authentication.name")
  * PreAuthorize trước khi thực hiện method
  * PostAuthorize sau khi thực hiện method kiểm tra quyền
+ * @PreAuthorize("hasAuthority('ADMIN')") map chính xác
  */
 @Configuration
 @EnableWebSecurity
@@ -72,7 +73,7 @@ public class SecurityConfig {
     @Bean
     JwtAuthenticationConverter jwtAuthenticationConverter(){
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
+        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("");
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
         return jwtAuthenticationConverter;
