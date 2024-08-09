@@ -1,6 +1,7 @@
 package com.websitebanhang.service.impl;
 
 import com.websitebanhang.dto.reponse.PageResponse;
+import com.websitebanhang.dto.reponse.PermissionRequest;
 import com.websitebanhang.dto.reponse.RolesRequest;
 import com.websitebanhang.entitys.Permission;
 import com.websitebanhang.mapper.mapstruct.RolesMapper;
@@ -38,9 +39,11 @@ public class RolesServiceImpl implements RolesService {
 	@Override
 	public Object create(RolesRequest rolesRequest) {
 		Roles roles = rolesMapper.toEntity(rolesRequest);
-		var permission = permissionRepo.findAllByName(rolesRequest.getPermission());
-		roles.setPermission(new HashSet<>(permission));
-		roles = rolesRepo.save(roles);
+		for(PermissionRequest s : rolesRequest.getPermission()){
+			var permission = permissionRepo.findAllById(Collections.singleton(s.getName()));
+			roles.setPermission(new HashSet<>(permission));
+			roles = rolesRepo.save(roles);
+		}
 		return rolesMapper.toDto(roles);
 	}
 

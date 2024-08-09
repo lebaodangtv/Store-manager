@@ -3,6 +3,7 @@ package com.websitebanhang.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.websitebanhang.dto.reponse.UserRequest;
 import com.websitebanhang.entitys.Users;
 
 public interface UsersService {
@@ -13,4 +14,6 @@ public interface UsersService {
 	Users findByUsername(String username);
 	void deleteLogical(String username);
 	void update(Users user);
+
+	Object updateUsers(UserRequest request);
 }

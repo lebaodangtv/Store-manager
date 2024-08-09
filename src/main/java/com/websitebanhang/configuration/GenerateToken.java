@@ -16,6 +16,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,10 +24,7 @@ import org.springframework.stereotype.Component;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Log4j2
 @Data
@@ -61,7 +59,7 @@ public class GenerateToken {
                         Instant.now().plus(1,
                                 ChronoUnit.HOURS).toEpochMilli()
                 ))
-                .claim("scope", "ADMIN")
+                .claim("scope", buildScope(user))
                 .build();
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
         JWSObject jwsObject = new JWSObject(header,payload );
@@ -79,12 +77,20 @@ public class GenerateToken {
      * @param users
      * @return
      */
-    private Set<String> buildScope(Users users){
-        HashSet<String> roles = new HashSet<>();
-        if(users != null){
+    private String buildScope(Users users){
+        StringJoiner stringJoiner = new StringJoiner(" ");
 
+        if(!CollectionUtils.isEmpty(users.getRoles())){
+            users.getRoles().forEach(role -> {
+                stringJoiner.add(role.getName());
+                if(!CollectionUtils.isEmpty(role.getPermission()))
+                    role.getPermission().forEach(permission -> {
+                        stringJoiner.add(permission.getName());
+                    });
+            });
         }
-        return null;
+
+        return stringJoiner.toString();
     }
 
     /**
