@@ -5,7 +5,9 @@ import java.util.List;
 
 
 import com.websitebanhang.dto.reponse.UserRequest;
+import com.websitebanhang.dto.request.LogoutRequest;
 import com.websitebanhang.mapper.mapstruct.UserMapper;
+import com.websitebanhang.repository.InvalidatedTokenRepo;
 import jakarta.transaction.Transactional;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -35,6 +37,8 @@ public class UserServiceImpl implements UsersService {
 
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	InvalidatedTokenRepo invalidatedTokenRepo;
 
 	@Override
 	public Users doLogin(Users usersRequest) {
