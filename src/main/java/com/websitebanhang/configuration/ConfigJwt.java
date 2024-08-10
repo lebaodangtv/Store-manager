@@ -37,7 +37,7 @@ import java.util.*;
 @NoArgsConstructor
 @Builder
 @Component
-public class ConfigToken {
+public class ConfigJwt {
 
     @NonFinal
     @Value("${jwt.signerKey}")

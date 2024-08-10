@@ -1,6 +1,6 @@
 package com.websitebanhang.api.admin;
 
-import com.websitebanhang.configuration.ConfigToken;
+import com.websitebanhang.configuration.ConfigJwt;
 import com.websitebanhang.constant.ApiResponse;
 import com.websitebanhang.dto.request.LoginRequest;
 import com.websitebanhang.dto.reponse.LoginResponse;
@@ -25,7 +25,7 @@ public class Authentication {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
     @Autowired
-    private ConfigToken token;
+    private ConfigJwt token;
 
 
     @PostMapping("/login")
