@@ -1,6 +1,5 @@
 package com.websitebanhang.api.admin;
 
-import com.nimbusds.jose.JOSEException;
 import com.websitebanhang.configuration.ConfigToken;
 import com.websitebanhang.constant.ApiResponse;
 import com.websitebanhang.dto.reponse.UserRequest;
@@ -8,16 +7,12 @@ import com.websitebanhang.dto.request.IntrospectRequest;
 import com.websitebanhang.dto.reponse.IntrospectRespponse;
 import com.websitebanhang.dto.request.LogoutRequest;
 import com.websitebanhang.entitys.Users;
-import com.websitebanhang.repository.InvalidatedTokenRepo;
 import com.websitebanhang.service.UsersService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
 import java.sql.SQLException;
-import java.text.ParseException;
 
 @RequestMapping("user")
 @RestController
