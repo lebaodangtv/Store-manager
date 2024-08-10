@@ -43,6 +43,14 @@ public class ConfigToken {
     @Value("${jwt.signerKey}")
     private String key;
 
+    @NonFinal
+    @Value("${jwt.valid-duration}")
+    private long valid_duration;
+
+    @NonFinal
+    @Value("${jwt.refreshable-duration}")
+    private long refreshable_duration;
+
     @Autowired
     private UsersRepo usersRepo;
 
@@ -64,8 +72,8 @@ public class ConfigToken {
                 .issuer("dang@gmail.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(
-                        Instant.now().plus(1,
-                                ChronoUnit.HOURS).toEpochMilli()
+                        Instant.now().plus(valid_duration,
+                                ChronoUnit.SECONDS).toEpochMilli()
                 ))
                 .jwtID(UUID.randomUUID().toString())
                 .claim("scope", buildScope(user))
@@ -113,7 +121,7 @@ public class ConfigToken {
         var token = request.getToken();
         boolean isValid = true;
         try {
-            verifyToken(token);
+            verifyToken(token, false);
         } catch (Exception e){
             isValid = false;
         }
@@ -121,10 +129,13 @@ public class ConfigToken {
         return IntrospectRespponse.builder().valid(isValid).build();
     }
 
-    private SignedJWT verifyToken(String token) throws Exception {
+    private SignedJWT verifyToken(String token, boolean isRefresh) throws Exception {
         JWSVerifier verifier = new MACVerifier(key.getBytes());
         SignedJWT signedJWT = SignedJWT.parse(token);
-        Date exPiTyTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+        Date exPiTyTime = (isRefresh)
+                ? new Date(signedJWT.getJWTClaimsSet().getIssueTime().toInstant().plus(refreshable_duration, ChronoUnit.SECONDS)
+                .getEpochSecond())
+        : signedJWT.getJWTClaimsSet().getExpirationTime();
         var verify = signedJWT.verify(verifier);
         if(!(verify && exPiTyTime.after(new Date())))
             throw new Exception("Cút!");
@@ -147,25 +158,29 @@ public class ConfigToken {
      *
      * @return
      */
-    public Object logout(LogoutRequest request) throws Exception {
-        var signToken = verifyToken(request.getToken());
-        String jit = signToken.getJWTClaimsSet().getJWTID();
-        Date expiryTime = signToken.getJWTClaimsSet().getExpirationTime();
-
-        InvalidatedToken invalidatedToken = InvalidatedToken
-                .builder()
-                .idToken(jit)
-                .expiryTime(expiryTime)
-                .build();
-        invalidatedTokenRepo.save(invalidatedToken);
-        return null;
+    public Object logout(LogoutRequest request) {
+        try {
+            var signToken = verifyToken(request.getToken(), true);
+            String jit = signToken.getJWTClaimsSet().getJWTID();
+            Date expiryTime = signToken.getJWTClaimsSet().getExpirationTime();
+            InvalidatedToken invalidatedToken = InvalidatedToken
+                    .builder()
+                    .idToken(jit)
+                    .expiryTime(expiryTime)
+                    .build();
+            invalidatedTokenRepo.save(invalidatedToken);
+            return null;
+        } catch (Exception e){
+            log.info("Hết hạn");
+            return e;
+        }
     }
 
     /**
      * refreshToken
      */
     public RefreshTokenNew refreshToken(RefreshRequest request) throws Exception {
-        var signed_jwt = verifyToken(request.getToken());
+        var signed_jwt = verifyToken(request.getToken(),true);
         var jit = signed_jwt.getJWTClaimsSet().getJWTID();
         var expiryTime = signed_jwt.getJWTClaimsSet().getExpirationTime();
         InvalidatedToken invalidatedToken = InvalidatedToken
