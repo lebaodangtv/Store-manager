@@ -6,6 +6,7 @@ import com.websitebanhang.dto.reponse.UserRequest;
 import com.websitebanhang.dto.request.IntrospectRequest;
 import com.websitebanhang.dto.reponse.IntrospectRespponse;
 import com.websitebanhang.dto.request.LogoutRequest;
+import com.websitebanhang.dto.request.RefreshRequest;
 import com.websitebanhang.entitys.Users;
 import com.websitebanhang.service.UsersService;
 import lombok.extern.log4j.Log4j2;
@@ -59,6 +60,13 @@ public class User {
        return ApiResponse.builder().code(200)
                .data(token.logout(request))
                .message("Logout thành công").build();
+    }
+
+    @PostMapping("/refresh-token")
+    public ApiResponse refreshToken(@RequestBody RefreshRequest request) throws Exception {
+        return ApiResponse.builder().code(200)
+                .data(token.refreshToken(request))
+                .message("refresh thành công").build();
     }
 
 }

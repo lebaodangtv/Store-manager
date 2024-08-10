@@ -33,7 +33,7 @@ public class SecurityConfig {
     private CustomJwtDecoder customJwtDecoder;
     private final String[] PUBLIC_ENDPOINT_GET = {"/v1/api/products"};
     private final String[] PUBLIC_ENDPOINT_POST = {"/user/create", "/auth/login", "/user/introspect-request",
-            "/user/logout"};
+            "/user/logout", "/user/refresh-token"};
     private final String[] PRIVATE_ENDPOINT_ADMIN_GET = {"/user/find"};
 
     /**
