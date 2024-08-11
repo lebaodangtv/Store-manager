@@ -1,49 +1,36 @@
-# ======================
-# DATASOURCE
-# ======================
-
-# Set here configurations for the database connection
-
-server:
-  port: 8080
-
-  #  Connection url for the database
 spring:
-  datasource:
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url: jdbc:sqlserver://localhost:1433;databaseName=mockproject_t6_2022;encrypt=true;trustServerCertificate=true;
-    username: sa
-    password: 123456
-    dbcp2:
-      test-while-idle: true
-      validation-query: SELECT 1
-  jpa:
-    hibernate:
-      ddl-auto: update  # Thay ??i gi� tr? n�y t�y v�o nhu c?u c?a b?n
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.SQLServerDialect
-jwt:
-  signerKey: "XX3jXX7J4K2zfBq13azJGXf+zn7VHzQV7cy+IcVNJ1So/cR/9/hh/USAZFeYnkQrZARNQxxvHZvgsPG01oOcsw=="  # Kh�a b� m?t d�ng ?? k� JWT
-  valid-duration: 3600 # in second 5s
-  refreshable-duration: 360000 # in seconds 2 hours
+  config:
+    import: "optional:configserver:http://config-service:10001"
+    activate:
+      on-profile: docker
+  output:
+    ansi:
+      enabled: always
 
-  # ===================
-  # JPA / HIBERNATE
-  # ===================
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      dialect: org.hibernate.dialect.SQLServer2012Dialect
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-service:10000/eureka/
+    healthcheck:
+      enabled: true
 
-  servlet:
-    session:
-      cookie:
-        http-only: true
-      tracking-modes: cookie
+---
+spring:
+  application:
+    name: admin-service
+  config:
+    import: "optional:configserver:http://localhost:10001"
+  output:
+    ansi:
+      enabled: always
 
-
-
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:10000/eureka/
+    healthcheck:
+      enabled: true
