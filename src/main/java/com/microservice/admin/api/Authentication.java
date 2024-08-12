@@ -1,5 +1,6 @@
 package com.microservice.admin.api;
 
+import com.microservice.admin.constant.ApiUrl;
 import com.microservice.admin.dto.reponse.LoginResponse;
 import com.microservice.admin.dto.request.LoginRequest;
 import com.microservice.admin.configuration.ConfigJwt;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping(ApiUrl.URL_ADMIN)
 @Log4j2
 public class Authentication {
     @Autowired

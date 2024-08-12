@@ -1,5 +1,6 @@
 package com.microservice.admin.api;
 
+import com.microservice.admin.constant.ApiUrl;
 import com.microservice.admin.dto.reponse.IntrospectRespponse;
 import com.microservice.admin.dto.reponse.UserRequest;
 import com.microservice.admin.dto.request.IntrospectRequest;
@@ -15,7 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.sql.SQLException;
 
-@RequestMapping("user")
+@RequestMapping(ApiUrl.URL_ADMIN)
 @RestController
 @Log4j2
 public class User {
@@ -25,7 +26,7 @@ public class User {
     @Autowired
     private ConfigJwt token;
 
-    @GetMapping("/find")
+    @GetMapping("/user/find")
     public ApiResponse find(){
         var authentication = SecurityContextHolder.getContext().getAuthentication();
 
