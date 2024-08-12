@@ -6,7 +6,7 @@
 		<groupId>com.base</groupId>
 		<artifactId>multi-module</artifactId>
 		<version>0.1.0</version>
-		<relativePath>pom.xml</relativePath>
+<!--		<relativePath>pom.xml</relativePath>-->
 	</parent>
 	<groupId>com.microservice.admin</groupId>
 	<artifactId>admin</artifactId>
