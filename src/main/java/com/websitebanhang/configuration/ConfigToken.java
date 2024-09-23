@@ -5,11 +5,9 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import com.websitebanhang.dto.reponse.RefreshTokenNew;
 import com.websitebanhang.dto.request.IntrospectRequest;
 import com.websitebanhang.dto.reponse.IntrospectRespponse;
 import com.websitebanhang.dto.request.LogoutRequest;
-import com.websitebanhang.dto.request.RefreshRequest;
 import com.websitebanhang.entitys.InvalidatedToken;
 import com.websitebanhang.entitys.Users;
 import com.websitebanhang.repository.InvalidatedTokenRepo;
@@ -159,27 +157,5 @@ public class ConfigToken {
                 .build();
         invalidatedTokenRepo.save(invalidatedToken);
         return null;
-    }
-
-    /**
-     * refreshToken
-     */
-    public RefreshTokenNew refreshToken(RefreshRequest request) throws Exception {
-        var signed_jwt = verifyToken(request.getToken());
-        var jit = signed_jwt.getJWTClaimsSet().getJWTID();
-        var expiryTime = signed_jwt.getJWTClaimsSet().getExpirationTime();
-        InvalidatedToken invalidatedToken = InvalidatedToken
-                .builder()
-                .idToken(jit)
-                .expiryTime(expiryTime)
-                .build();
-        invalidatedTokenRepo.save(invalidatedToken);
-        var username = signed_jwt.getJWTClaimsSet().getSubject();
-        var user = usersRepo.findByUsername(username);
-        var tokeNew = generateToken(user);
-        return RefreshTokenNew
-                .builder()
-                .token(tokeNew)
-                .build();
     }
 }

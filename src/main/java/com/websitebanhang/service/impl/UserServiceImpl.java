@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.websitebanhang.dto.reponse.UserRequest;
 import com.websitebanhang.dto.request.LogoutRequest;
-import com.websitebanhang.dto.request.RefreshRequest;
 import com.websitebanhang.mapper.mapstruct.UserMapper;
 import com.websitebanhang.repository.InvalidatedTokenRepo;
 import jakarta.transaction.Transactional;
