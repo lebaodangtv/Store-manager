@@ -7,9 +7,7 @@ import com.websitebanhang.dto.IntrospectRequest;
 import com.websitebanhang.dto.IntrospectRespponse;
 import com.websitebanhang.entitys.Users;
 import com.websitebanhang.service.UsersService;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -17,21 +15,13 @@ import java.text.ParseException;
 
 @RequestMapping("user")
 @RestController
-@Log4j2
 public class User {
 
     @Autowired
     private UsersService usersService;
-    @Autowired
-    private GenerateToken generateToken;
 
     @GetMapping("/find")
     public ApiResponse find(){
-        var authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        log.info("Username: {}", authentication.getName());
-        authentication.getAuthorities().forEach(x -> log.info(x.getAuthority()));
-
         return ApiResponse.builder().code(200).data(usersService.findAll()).message("Success").build();
     }
 
@@ -42,7 +32,8 @@ public class User {
 
     @PostMapping("/introspect-request")
     public IntrospectRespponse introspectRequest(@RequestBody IntrospectRequest request) throws SQLException, ParseException, JOSEException {
-        return generateToken.introspectRespponse(request);
+       var result = GenerateToken.introspectRespponse(request);
+       return result;
     }
 
 }
