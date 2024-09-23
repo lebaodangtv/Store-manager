@@ -2,8 +2,9 @@ package com.websitebanhang.service.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
 
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class OrdersServiceImpl implements OrdersService {
 	 đã được mở trước đó. cartService là 1 transac đã mở.@Transac này chỉ là 1 
 	 thành phần trong đó */
 	
-	@Transactional(value = Transactional.TxType.REQUIRED)
+	@Transactional(value = TxType.REQUIRED)
 	@Override
 	public Orders insert(Orders orders) {
 		return repo.saveAndFlush(orders);

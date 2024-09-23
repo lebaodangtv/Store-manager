@@ -2,8 +2,8 @@ package com.websitebanhang.service.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
 
-import jakarta.transaction.Transactional;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

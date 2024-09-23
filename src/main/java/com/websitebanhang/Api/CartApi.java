@@ -1,7 +1,7 @@
 package com.websitebanhang.Api;
 
+import javax.servlet.http.HttpSession;
 
-import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,10 +20,10 @@ import com.websitebanhang.util.SessionUtil;
 @RestController
 @RequestMapping("/api/cart")
 public class CartApi {
-
+	
 	@Autowired
 	private CartService cartService;
-
+	
 	// api/cart/update?productId=...&quantity=...&isReplace..
 	@GetMapping("/update")
 	public ResponseEntity<?> doGetUpdate(@RequestParam("productId") Long productId,
@@ -34,13 +34,13 @@ public class CartApi {
 		cartService.updateCart(currentCart, productId, quantity, isREplace);
 		return ResponseEntity.ok(currentCart);
 	}
-
+	
 	@GetMapping("/refresh") // gọi api này sao khi remove sp trong giỏ hàng
 	public ResponseEntity<?> doGetRefreshData(HttpSession session){
 		CartDto currentCart = SessionUtil.getCurrentCart(session);
 		return ResponseEntity.ok(currentCart);
 	}
-
+	
 	// /api/cart/checkout?address=...&phone=...
 	@GetMapping("/checkout")
 	public ResponseEntity<?> deGetCheckout(@RequestParam("address")
@@ -62,5 +62,5 @@ public class CartApi {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST); //400 data sai
 		}
 	}
-
+	
 }

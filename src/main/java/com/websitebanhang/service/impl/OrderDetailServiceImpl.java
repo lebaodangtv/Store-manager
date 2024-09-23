@@ -2,8 +2,9 @@ package com.websitebanhang.service.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
 
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	@Autowired
 	private OrderDetailsRepo repo;
 
-	@Transactional(value = Transactional.TxType.REQUIRED)
+	@Transactional(value = TxType.REQUIRED)
 	@Override
 	public void insert(CartDetailDto cartDetailDto) {
 		repo.insert(cartDetailDto);

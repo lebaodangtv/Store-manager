@@ -2,13 +2,16 @@ package com.websitebanhang.service.impl;
 
 import java.io.InputStream;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
 
 import com.websitebanhang.constant.*;
 import com.websitebanhang.dto.ProductsDto;
 import com.websitebanhang.enums.CheckEmpty;
 import com.websitebanhang.mapper.ProductsMapper;
-import jakarta.transaction.Transactional;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.commons.lang3.ObjectUtils;
@@ -59,7 +62,7 @@ public class ProductsServiceImpl implements ProductsService {
 	/* sao này nếu thự hiện update quantity trong admin
 	 * mà bị bug thì nhớ bỏ value = TxType.REQUIRED đi
 	 */
-	@Transactional(value = Transactional.TxType.REQUIRED)
+	@Transactional(value = TxType.REQUIRED)
 	@Override
 	public void updateQuantity(Integer newQuatity, Long id) {
 		repo.updateQuantity(newQuatity, id);
