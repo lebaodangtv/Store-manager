@@ -48,7 +48,7 @@ public class UserServiceImpl implements UsersService {
 	@Transactional(rollbackOn = {Exception.class, Throwable.class})
 	public Users save(Users users) throws SQLException {
 		Roles roles = rolesService.findByDescription(RolesConstant.USER);
-		//users.setRoles(roles);
+		users.setRoles(roles);
 		/* khi đk thì set false tại tại khoản vừa được khích hoạt không thể là true(delete) */
 		users.setIsDeleted(Boolean.FALSE);
 		/* mã hóa password gốc trướt khi gán*/

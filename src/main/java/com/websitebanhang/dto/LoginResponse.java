@@ -1,4 +1,5 @@
-package com.websitebanhang.dto.request;
+package com.websitebanhang.dto;
+
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,8 +9,9 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class LoginRequest {
+public class LoginResponse {
+    private String token;
     private String username;
-    private String password;
+    private String email;
+    private String fullName;
 }
-

@@ -1,7 +1,6 @@
 package com.websitebanhang.entitys;
 
 import java.io.Serializable;
-import java.util.Set;
 
 
 import jakarta.persistence.*;
@@ -27,7 +26,4 @@ public class Roles implements Serializable {/**
 	
 	@Column
 	String description;
-
-	@ManyToMany
-	Set<Permission> permissionSet;
 }

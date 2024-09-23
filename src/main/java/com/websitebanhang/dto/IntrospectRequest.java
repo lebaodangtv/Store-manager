@@ -1,4 +1,4 @@
-package com.websitebanhang.dto.reponse;
+package com.websitebanhang.dto;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,6 +8,6 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class IntrospectRespponse {
-   boolean valid;
+public class IntrospectRequest {
+    String token;
 }

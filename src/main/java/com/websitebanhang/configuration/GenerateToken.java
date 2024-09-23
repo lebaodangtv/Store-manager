@@ -5,8 +5,8 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import com.websitebanhang.dto.request.IntrospectRequest;
-import com.websitebanhang.dto.reponse.IntrospectRespponse;
+import com.websitebanhang.dto.IntrospectRequest;
+import com.websitebanhang.dto.IntrospectRespponse;
 import com.websitebanhang.entitys.Users;
 import com.websitebanhang.repository.UsersRepo;
 import jakarta.validation.constraints.NotNull;
@@ -73,12 +73,11 @@ public class GenerateToken {
      * @return
      */
     private String buildScope(Users users){
-//        String roles = "";
-//        if(users.getRoles() != null){
-//            roles = users.getRoles().getDescription();
-//        }
-//        return roles;
-        return null;
+        String roles = "";
+        if(users.getRoles() != null){
+            roles = users.getRoles().getDescription();
+        }
+        return roles;
     }
 
     /**
