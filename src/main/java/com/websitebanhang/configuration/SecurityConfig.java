@@ -6,11 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -25,14 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import javax.crypto.SecretKey;
 
-/**
- * @EnableMethodSecurity
- * @PreAuthorize("hasAnyRole('ADMIN')")
- * @PostAuthorize("returnObject.username == authentication.name")
- * Xác thực kiểm tra trước khi vào method
- * PreAuthorize trước khi thực hiện method
- * PostAuthorize sau khi thực hiện method kiểm tra quyền
- */
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -43,13 +33,6 @@ public class SecurityConfig {
     private final String[] PUBLIC_ENDPOINT_POST = {"/user/create", "/auth/login", "/user/introspect-request"};
     private final String[] PRIVATE_ENDPOINT_ADMIN_GET = {"/user/find"};
 
-    /**
-     * .hasAnyAuthority() cấu hình trực tiếp
-     * .hasRole() cấu hình linh động
-     * @param http
-     * @return
-     * @throws Exception
-     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(request ->
@@ -68,10 +51,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /**
-     * cấu hình lại ROLE
-     * @return
-     */
     @Bean
     JwtAuthenticationConverter jwtAuthenticationConverter(){
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
