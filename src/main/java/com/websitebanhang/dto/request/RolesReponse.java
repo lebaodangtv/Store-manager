@@ -11,7 +11,6 @@ import java.util.Set;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RolesReponse {
-    String name;
     String description;
-    Set<String> permission;
+    Set<String> name;
 }

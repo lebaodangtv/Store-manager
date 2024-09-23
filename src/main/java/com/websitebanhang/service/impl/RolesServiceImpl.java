@@ -2,7 +2,6 @@ package com.websitebanhang.service.impl;
 
 import com.websitebanhang.dto.reponse.PageResponse;
 import com.websitebanhang.dto.reponse.RolesRequest;
-import com.websitebanhang.entitys.Permission;
 import com.websitebanhang.mapper.mapstruct.RolesMapper;
 import com.websitebanhang.repository.PermissionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,6 @@ import com.websitebanhang.service.RolesService;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Service
 public class RolesServiceImpl implements RolesService {
@@ -38,12 +35,11 @@ public class RolesServiceImpl implements RolesService {
 	@Override
 	public Object create(RolesRequest rolesRequest) {
 		Roles roles = rolesMapper.toEntity(rolesRequest);
-		var permission = permissionRepo.findAllByName(rolesRequest.getPermission());
+		var permission = permissionRepo.findAllByName(rolesRequest.getName());
 		roles.setPermission(new HashSet<>(permission));
 		roles = rolesRepo.save(roles);
-		return rolesMapper.toDto(roles);
+		return rolesMapper.toDto(rolesRepo.save(roles));
 	}
-
 
 	@Override
 	public Object find(Integer page, Integer limit) {

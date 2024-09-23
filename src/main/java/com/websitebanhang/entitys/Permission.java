@@ -13,6 +13,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class Permission {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column
     String name;
 

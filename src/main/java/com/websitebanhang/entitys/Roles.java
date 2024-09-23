@@ -21,6 +21,7 @@ public class Roles implements Serializable {/**
 	static final long serialVersionUID = 5175438623266778535L;
 	
 	@Id
+	@GeneratedValue (strategy = GenerationType.UUID)
 	@Column
 	String name;
 	

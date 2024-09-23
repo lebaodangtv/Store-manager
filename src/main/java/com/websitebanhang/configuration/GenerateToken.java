@@ -8,7 +8,6 @@ import com.nimbusds.jwt.SignedJWT;
 import com.websitebanhang.dto.request.IntrospectRequest;
 import com.websitebanhang.dto.reponse.IntrospectRespponse;
 import com.websitebanhang.entitys.Users;
-import com.websitebanhang.repository.RolesRepo;
 import com.websitebanhang.repository.UsersRepo;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -25,7 +24,6 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Log4j2
@@ -42,9 +40,6 @@ public class GenerateToken {
 
     @Autowired
     private UsersRepo usersRepo;
-
-    @Autowired
-    private RolesRepo rolesRepo;
 
     /**
      * tạo token có phân quyền
@@ -81,9 +76,6 @@ public class GenerateToken {
      */
     private Set<String> buildScope(Users users){
         HashSet<String> roles = new HashSet<>();
-        if(users != null){
-
-        }
         return null;
     }
 
