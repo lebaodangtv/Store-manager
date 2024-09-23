@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import com.websitebanhang.constant.*;
 import com.websitebanhang.dto.ProductsDto;
 import com.websitebanhang.enums.CheckEmpty;
-import com.websitebanhang.mapper.modelmapper.mapper.ProductsMapper;
+import com.websitebanhang.mapper.ProductsMapper;
 import jakarta.transaction.Transactional;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
