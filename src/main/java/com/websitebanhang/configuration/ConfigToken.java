@@ -133,9 +133,8 @@ public class ConfigToken {
         JWSVerifier verifier = new MACVerifier(key.getBytes());
         SignedJWT signedJWT = SignedJWT.parse(token);
         Date exPiTyTime = (isRefresh)
-                ? new Date(signedJWT.getJWTClaimsSet().getIssueTime()
-                .toInstant().plus(refreshable_duration, ChronoUnit.SECONDS)
-                .toEpochMilli())
+                ? new Date(signedJWT.getJWTClaimsSet().getIssueTime().toInstant().plus(refreshable_duration, ChronoUnit.SECONDS)
+                .getEpochSecond())
         : signedJWT.getJWTClaimsSet().getExpirationTime();
         var verify = signedJWT.verify(verifier);
         if(!(verify && exPiTyTime.after(new Date())))
