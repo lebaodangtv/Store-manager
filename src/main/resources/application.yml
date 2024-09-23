@@ -24,7 +24,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.SQLServerDialect
 jwt:
-  signerKey: "XX3jXX7J4K2zfBq13azJGXf+zn7VHzQV7cy+IcVNJ1So/cR/9/hh/USAZFeYnkQrZARNQxxvHZvgsPG01oOcsw=="  # Khóa bí m?t dùng ?? ký JWT
+  signerKey: "d2ViU2VjdXJpdHkzMDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MA=="  # Khóa bí m?t dùng ?? ký JWT
 
 
   # ===================

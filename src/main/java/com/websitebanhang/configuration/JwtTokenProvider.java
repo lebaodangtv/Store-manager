@@ -3,7 +3,6 @@ package com.websitebanhang.configuration;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -15,7 +14,7 @@ public class JwtTokenProvider {
 
     public JwtTokenProvider(String base64SecretKey) {
         byte[] keyBytes = Base64.getDecoder().decode(base64SecretKey);
-        this.secretKey = Keys.hmacShaKeyFor(keyBytes);
+        this.secretKey = new SecretKeySpec(keyBytes, SignatureAlgorithm.HS512.getJcaName());
     }
 
     public String createToken(String username) {
