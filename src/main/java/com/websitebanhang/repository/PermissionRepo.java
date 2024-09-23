@@ -10,4 +10,8 @@ import java.util.Set;
 
 @Repository
 public interface PermissionRepo extends JpaRepository<Permission, String> {
+    @Query("""
+    select f from Permission f where f.name in :name
+    """)
+    Set<Permission> findAllByName(@Param("name") Set<String> name);
 }

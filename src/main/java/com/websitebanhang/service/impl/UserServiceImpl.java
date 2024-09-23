@@ -4,8 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-import com.websitebanhang.dto.reponse.UserRequest;
-import com.websitebanhang.mapper.mapstruct.UserMapper;
 import jakarta.transaction.Transactional;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -32,9 +30,6 @@ public class UserServiceImpl implements UsersService {
 		
 	@Autowired
 	private RolesService rolesService;
-
-	@Autowired
-	private UserMapper userMapper;
 
 	@Override
 	public Users doLogin(Users usersRequest) {
@@ -87,18 +82,6 @@ public class UserServiceImpl implements UsersService {
 			user.setHashPassword(hashPassword);
 			userRepo.update(user.getEmail(), hashPassword, user.getFullname(), user.getUsername());
 		}
-	}
-
-	@Override
-	public Object updateUsers(UserRequest request) {
-		if(request != null){
-			Users users = userMapper.toUser(request);
-			if(ObjectUtils.isNotEmpty(users)){
-				users = userRepo.save(users);
-			}
-			return userMapper.toDto(users);
-		}
-		return null;
 	}
 
 }
