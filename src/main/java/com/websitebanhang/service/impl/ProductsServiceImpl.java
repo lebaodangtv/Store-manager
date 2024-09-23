@@ -2,16 +2,19 @@ package com.websitebanhang.service.impl;
 
 import java.io.InputStream;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
-import com.websitebanhang.constant.*;
+import com.websitebanhang.constant.ApiResponse;
+import com.websitebanhang.constant.Message;
+import com.websitebanhang.constant.PageResponse;
+import com.websitebanhang.constant.RequestFile;
 import com.websitebanhang.dto.ProductsDto;
+import com.websitebanhang.entitys.ProductTypes;
 import com.websitebanhang.enums.CheckEmpty;
-import com.websitebanhang.mapper.ProductsMapper;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.commons.lang3.ObjectUtils;
@@ -32,10 +35,6 @@ public class ProductsServiceImpl implements ProductsService {
 
 	@Autowired
 	private ProductsRepo repo;
-
-	@Autowired
-	private ProductsMapper productsMapper;
-
 
 //    @Autowired
 //    private ProductsMapper productsMapper;
@@ -133,19 +132,45 @@ public class ProductsServiceImpl implements ProductsService {
 	@Override
 	public ResponseEntity<ByteArrayResource> export() throws Exception{
 		List<Products> products = repo.findAll();
-		AtomicLong i = new AtomicLong(1);
-		List<ProductsDto> dto = productsMapper.toDTO(products);
-		JRDataSource dataSource = new JRBeanCollectionDataSource(dto);
+//		InputStream inputStream = new ClassPathResource("export/ProductExport.jrxml").getInputStream();
+//		JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
+		JRDataSource dataSource = new JRBeanCollectionDataSource(products);
+//		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, dataSource);
+//		byte[] fileBytes = JasperExportManager.exportReportToPdf(jasperPrint);
+		// Danh sách chuỗi để xuất
+//		List<String> names = Arrays.asList("Đăng", "Trung", "Thành");
+
+		// Tạo nguồn dữ liệu từ danh sách chuỗi
+//		JRDataSource dataSource = new JRBeanCollectionDataSource(
+//				names.stream().map(NameBean::new).collect(Collectors.toList())
+//		);
+
 		// Tải và biên dịch template báo cáo
-		InputStream inputStream = new ClassPathResource("export/DonHang.jrxml").getInputStream();
+		InputStream inputStream = new ClassPathResource("export/listreport.jrxml").getInputStream();
 		JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
 		Map<String, Object> parameters = new HashMap<>();
-		parameters.put("report", "Danh sách sản phẩm");
+		parameters.put("REPORT_TITLE", "Danh sách sản phẩm");
 		// Điền dữ liệu vào báo cáo
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+
 		// Xuất báo cáo ra định dạng PDF
-		byte[] excelFile = RequestFile.exportExcel(jasperPrint);
-		return RequestFile.createFileResponse(excelFile, "ProductReport", ExportType.FILE_TYPE_EXCEL);
+		byte[] excelFile = RequestFile.exportWord(jasperPrint);
+		return RequestFile.createFileResponse(excelFile, "ProductReport", "excel");
+	}
+	public static class NameBean {
+		private String name;
+
+		public NameBean(String name) {
+			this.name = name;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
 	}
 }
 
