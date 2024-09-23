@@ -14,56 +14,56 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table (name = "users")
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@Builder
 public class Users implements Serializable {/**
 	 * 
 	 */
-	static final long serialVersionUID = -7866646107417363856L;
+	private static final long serialVersionUID = -7866646107417363856L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long id;
+	private Long id;
 	
 	@Column
 	@Size(max = 20, message = "Username must be less than 20 characters")
-	String username;
+	private String username;
 	
 	@Column 
 	@Size(max = 50, message = "Fullname must be less than 50 characters")
-	String fullname;
+	private String fullname;
 	
 	@Column 
-	String hashPassword;
+	private String hashPassword;
 	
 	@Column
 	@Email
-	String email;
+	private String email;
 	
 	@Column 
 	@CreationTimestamp // lấy thời gian hệ thống ngây tại thời điểm insert entitys vào database
-	Timestamp createdDate;
+	private Timestamp createdDate; 
 	
 	@Column
-	String imgUrl;
+	private String imgUrl;
 	
 	@Column
-	Boolean isDeleted;
+	private Boolean isDeleted;
 	
 	@ManyToOne
 	@JsonIgnoreProperties (value = {"applications", "hibernateLazyInitializer"})
 	@JoinColumn(name = "roleId", referencedColumnName = "id")
-	Roles roles;
+	private Roles roles;
 	
 }

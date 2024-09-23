@@ -1,8 +1,6 @@
 package com.websitebanhang.Api;
 
 import java.util.List;
-
-import com.websitebanhang.constant.ApiResponse;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,13 +46,5 @@ public class ProductApi {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND); // erorr 404
 		}
 		return ResponseEntity.ok(product);
-	}
-
-	@GetMapping("/product-type")
-	public ApiResponse productType(
-			@RequestParam(value = "pageSize" ,defaultValue = "0") Integer pageSize,
-			@RequestParam(value = "pageNumber" ,defaultValue = "10") Integer pageNumber
-	){
-		return productsService.productType(pageSize,pageNumber);
 	}
 }
