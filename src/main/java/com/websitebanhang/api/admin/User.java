@@ -35,11 +35,6 @@ public class User {
         return ApiResponse.builder().code(200).data(usersService.findAll()).message("Success").build();
     }
 
-    @GetMapping("/find/one")
-    public ApiResponse findOne(){
-        return ApiResponse.builder().code(200).data(generateToken.userRequest()).message("Success").build();
-    }
-
     @PostMapping("/create")
     public ApiResponse create(@RequestBody Users request) throws SQLException {
         return ApiResponse.builder().code(200).data(usersService.save(request)).message("Tạo thành công").build();

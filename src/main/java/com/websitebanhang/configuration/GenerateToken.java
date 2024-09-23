@@ -8,16 +8,13 @@ import com.nimbusds.jwt.SignedJWT;
 import com.websitebanhang.dto.IntrospectRequest;
 import com.websitebanhang.dto.IntrospectRespponse;
 import com.websitebanhang.entitys.Users;
-import com.websitebanhang.repository.UsersRepo;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import java.text.ParseException;
 import java.time.Instant;
@@ -35,9 +32,6 @@ public class GenerateToken {
     @NotNull
     @Value("${jwt.signerKey}")
     private String key;
-
-    @Autowired
-    private UsersRepo usersRepo;
 
     /**
      * tạo token có phân quyền
@@ -94,14 +88,5 @@ public class GenerateToken {
         Date exPiTyTime = signedJWT.getJWTClaimsSet().getExpirationTime();
         var verify = signedJWT.verify(verifier);
         return IntrospectRespponse.builder().valid(verify && exPiTyTime.after(new Date())).build();
-    }
-
-    /**
-     * Lấy ra username đăng nhập
-     */
-    public Users userRequest(){
-        var context = SecurityContextHolder.getContext();
-        String name = context.getAuthentication().getName();
-        return usersRepo.findByUsername(name);
     }
 }
