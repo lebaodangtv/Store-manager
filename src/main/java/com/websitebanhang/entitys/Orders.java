@@ -40,6 +40,6 @@ public class Orders implements Serializable{/**
 	
 	@ManyToOne
 	@JsonIgnoreProperties(value = {"applications","hibernateLazyInitializer"})
-	@JoinColumn(name ="user_name", referencedColumnName = "name")
+	@JoinColumn(name ="userId", referencedColumnName = "id")
 	Users user;
 }

@@ -37,12 +37,12 @@ public class Permission {
     }
 
     @PostMapping("/delete")
-    public ApiResponse delete(@RequestParam(value = "name", required = true) String name){
+    public ApiResponse delete(@RequestParam(value = "id", required = true) Long id){
         return ApiResponse
                 .builder()
                 .code(200)
                 .message("Delete thành công!")
-                .data(permissionService.delete(name))
+                .data(permissionService.delete(id))
                 .build();
     }
 

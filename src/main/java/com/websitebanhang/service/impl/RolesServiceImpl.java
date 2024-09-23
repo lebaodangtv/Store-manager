@@ -1,5 +1,6 @@
 package com.websitebanhang.service.impl;
 
+import com.websitebanhang.constant.ApiResponse;
 import com.websitebanhang.dto.reponse.PageResponse;
 import com.websitebanhang.dto.reponse.RolesRequest;
 import com.websitebanhang.mapper.mapstruct.RolesMapper;
@@ -35,8 +36,8 @@ public class RolesServiceImpl implements RolesService {
 	@Override
 	public Object create(RolesRequest rolesRequest) {
 		Roles roles = rolesMapper.toEntity(rolesRequest);
-		var permission = permissionRepo.findAllByName(rolesRequest.getName());
-		roles.setPermission(new HashSet<>(permission));
+		var permission = permissionRepo.findAllById(rolesRequest.getIdPermission());
+		roles.setPermissionSet(new HashSet<>(permission));
 		roles = rolesRepo.save(roles);
 		return rolesMapper.toDto(rolesRepo.save(roles));
 	}
@@ -59,8 +60,8 @@ public class RolesServiceImpl implements RolesService {
 	}
 
 	@Override
-	public Object delete(String name) {
-		rolesRepo.deleteById(name);
+	public Object delete(Long id) {
+		rolesRepo.deleteById(id);
 		return "Xóa thành công";
 	}
 

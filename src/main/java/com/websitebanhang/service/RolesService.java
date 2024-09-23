@@ -10,5 +10,5 @@ public interface RolesService {
 
 	Object find(Integer page, Integer limit);
 
-	Object delete(String name);
+	Object delete(Long id);
 }

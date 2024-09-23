@@ -44,8 +44,8 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public Object delete(String name) {
-        permissionRepo.deleteById(name);
+    public Object delete(Long id) {
+        permissionRepo.deleteById(id);
         return "Xóa thành công";
     }
 }
