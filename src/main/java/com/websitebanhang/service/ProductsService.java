@@ -23,5 +23,5 @@ public interface ProductsService {
 
     ApiResponse productType(Integer pageSize, Integer Number);
 
-	ResponseEntity<ByteArrayResource> export(String typeFile) throws Exception;
+	ResponseEntity<ByteArrayResource> export() throws Exception;
 }

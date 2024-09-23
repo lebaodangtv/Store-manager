@@ -131,8 +131,9 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 
 	@Override
-	public ResponseEntity<ByteArrayResource> export(String typeFile) throws Exception{
+	public ResponseEntity<ByteArrayResource> export() throws Exception{
 		List<Products> products = repo.findAll();
+		AtomicLong i = new AtomicLong(1);
 		List<ProductsDto> dto = productsMapper.toDTO(products);
 		JRDataSource dataSource = new JRBeanCollectionDataSource(dto);
 		// Tải và biên dịch template báo cáo
@@ -143,8 +144,8 @@ public class ProductsServiceImpl implements ProductsService {
 		// Điền dữ liệu vào báo cáo
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 		// Xuất báo cáo ra định dạng PDF
-		return  RequestFile.responseFile(typeFile,jasperPrint);
+		byte[] excelFile = RequestFile.exportExcel(jasperPrint);
+		return RequestFile.createFileResponse(excelFile, "ProductReport", ExportType.FILE_TYPE_EXCEL);
 	}
-
 }
 

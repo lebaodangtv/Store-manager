@@ -76,7 +76,7 @@ public class RequestFile {
             // Trả về dữ liệu dưới dạng byte[]
             return outputStream.toByteArray();
         } catch (Exception e) {
-            throw new RuntimeException("Lỗi xuất file excel ", e);
+            throw new RuntimeException("Error exporting report to Excel", e);
         } finally {
             try {
                 outputStream.close();
@@ -103,7 +103,7 @@ public class RequestFile {
             exporter.exportReport();
             return outputStream.toByteArray();
         } catch (Exception e) {
-            throw new RuntimeException("Lỗi khi xuất file word", e);
+            throw new RuntimeException("Error exporting report to Word", e);
         } finally {
             try {
                 outputStream.close();
@@ -111,23 +111,5 @@ public class RequestFile {
                 e.printStackTrace();
             }
         }
-    }
-    public static ResponseEntity<ByteArrayResource> responseFile(String typeFile, JasperPrint jasperPrint){
-        byte[] excelFile = null;
-        switch (typeFile) {
-            case "pdf":
-                excelFile = RequestFile.exportPdf(jasperPrint);
-                break;
-            case "xlsx":
-                excelFile = RequestFile.exportExcel(jasperPrint);
-                break;
-            case "doc":
-                excelFile = RequestFile.exportWord(jasperPrint);
-                break;
-        }
-        if(excelFile != null){
-            return RequestFile.createFileResponse(excelFile, "ProductReport", ExportType.FILE_TYPE_EXCEL);
-        }
-        return null;
     }
 }

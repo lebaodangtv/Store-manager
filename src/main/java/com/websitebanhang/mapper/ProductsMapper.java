@@ -5,6 +5,7 @@ import com.websitebanhang.entitys.Products;
 import org.mapstruct.Mapper;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Mapper(componentModel = "spring")
 public interface ProductsMapper {
