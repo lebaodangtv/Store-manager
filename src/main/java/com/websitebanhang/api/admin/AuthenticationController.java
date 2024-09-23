@@ -1,8 +1,6 @@
 package com.websitebanhang.api.admin;
 
 import com.websitebanhang.configuration.JwtTokenProvider;
-import com.websitebanhang.constant.ApiResponse;
-import com.websitebanhang.entitys.Users;
 import com.websitebanhang.service.impl.CustomUserDetailsService;
 import com.websitebanhang.service.impl.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +27,19 @@ public class AuthenticationController {
     private CustomUserDetailsService customUserDetailsService;
 
     @PostMapping("/login")
-    public ApiResponse login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
         );
-        Users userDetails = customUserDetailsService.users(loginRequest.getUsername());
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(loginRequest.getUsername());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtTokenProvider.createToken(loginRequest.getUsername());
-        return ApiResponse.builder().data(LoginResponse.builder().token(token)
-                .username(userDetails.getUsername())
-                .email(userDetails.getUsername())
-                .fullName(userDetails.getFullname())
-                .build()).message("Thành công").code(200).build();
+        LoginResponse loginResponse = new LoginResponse(
+                token,
+                userDetails.getUsername(),
+                ((UserPrincipal) userDetails)
+                        .getUsername()
+        );
+        return ResponseEntity.ok(loginResponse);
     }
 }
