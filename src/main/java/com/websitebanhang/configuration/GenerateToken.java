@@ -23,8 +23,6 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Log4j2
 @Data
@@ -56,7 +54,7 @@ public class GenerateToken {
                         Instant.now().plus(1,
                                 ChronoUnit.HOURS).toEpochMilli()
                 ))
-                .claim("scope", "ADMIN")
+                .claim("scope", buildScope(user))
                 .build();
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
         JWSObject jwsObject = new JWSObject(header,payload );
@@ -74,8 +72,12 @@ public class GenerateToken {
      * @param users
      * @return
      */
-    private Set<String> buildScope(Users users){
-        HashSet<String> roles = new HashSet<>();
+    private String buildScope(Users users){
+//        String roles = "";
+//        if(users.getRoles() != null){
+//            roles = users.getRoles().getDescription();
+//        }
+//        return roles;
         return null;
     }
 

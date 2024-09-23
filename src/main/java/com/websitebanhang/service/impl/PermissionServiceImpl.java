@@ -29,15 +29,14 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public Object find(Integer page, Integer limit) {
         Pageable pageable = PageRequest.of(page,limit);
-        Page<Permission> pages = permissionRepo.findAll(pageable);
+        Page<Permission>  pages = permissionRepo.findAll(pageable);
         if(!pages.isEmpty()){
             return PageResponse
                     .builder()
                     .total(pages.getTotalElements())
                     .page(pages.getNumber())
                     .limit(pages.getSize())
-                    .items(Collections.singletonList(pages.getContent().stream()
-                            .map(permissionMapper::toDto).toList()))
+                    .items(Collections.singletonList(pages.getContent()))
                     .build();
         }
         return null;
