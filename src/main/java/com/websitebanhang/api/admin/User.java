@@ -1,6 +1,6 @@
 package com.websitebanhang.api.admin;
 
-import com.websitebanhang.configuration.ConfigJwt;
+import com.websitebanhang.configuration.ConfigToken;
 import com.websitebanhang.constant.ApiResponse;
 import com.websitebanhang.dto.reponse.UserRequest;
 import com.websitebanhang.dto.request.IntrospectRequest;
@@ -23,7 +23,7 @@ public class User {
     @Autowired
     private UsersService usersService;
     @Autowired
-    private ConfigJwt token;
+    private ConfigToken token;
 
     @GetMapping("/find")
     public ApiResponse find(){
