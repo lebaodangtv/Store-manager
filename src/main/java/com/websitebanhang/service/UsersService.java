@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.websitebanhang.dto.reponse.UserRequest;
-import com.websitebanhang.dto.request.LogoutRequest;
 import com.websitebanhang.entitys.Users;
 
 public interface UsersService {
@@ -17,5 +16,4 @@ public interface UsersService {
 	void update(Users user);
 
 	Object updateUsers(UserRequest request);
-
 }

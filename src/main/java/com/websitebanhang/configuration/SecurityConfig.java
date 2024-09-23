@@ -2,7 +2,6 @@ package com.websitebanhang.configuration;
 
 import com.websitebanhang.enums.Role;
 import io.jsonwebtoken.security.Keys;
-import lombok.experimental.NonFinal;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,7 +35,6 @@ import javax.crypto.SecretKey;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @NonFinal
     @Value("${jwt.signerKey}")
     private String key;
     private final String[] PUBLIC_ENDPOINT_GET = {"/v1/api/products"};

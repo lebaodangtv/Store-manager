@@ -7,17 +7,14 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import com.websitebanhang.dto.request.IntrospectRequest;
 import com.websitebanhang.dto.reponse.IntrospectRespponse;
-import com.websitebanhang.dto.request.LogoutRequest;
-import com.websitebanhang.entitys.InvalidatedToken;
 import com.websitebanhang.entitys.Users;
-import com.websitebanhang.repository.InvalidatedTokenRepo;
 import com.websitebanhang.repository.RolesRepo;
 import com.websitebanhang.repository.UsersRepo;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.NonFinal;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +32,9 @@ import java.util.*;
 @NoArgsConstructor
 @Builder
 @Component
-public class ConfigToken {
+public class GenerateToken {
 
-    @NonFinal
+    @NotNull
     @Value("${jwt.signerKey}")
     private String key;
 
@@ -46,9 +43,6 @@ public class ConfigToken {
 
     @Autowired
     private RolesRepo rolesRepo;
-
-    @Autowired
-    private InvalidatedTokenRepo invalidatedTokenRepo;
 
     /**
      * tạo token có phân quyền
@@ -65,7 +59,6 @@ public class ConfigToken {
                         Instant.now().plus(1,
                                 ChronoUnit.HOURS).toEpochMilli()
                 ))
-                .jwtID(UUID.randomUUID().toString())
                 .claim("scope", buildScope(user))
                 .build();
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
@@ -101,34 +94,19 @@ public class ConfigToken {
     }
 
     /**
-     * kiểm tra token có hợp lệ không
+     * kiểm tra token
      * @param request
      * @return
      * @throws JOSEException
      * @throws ParseException
      */
-    public IntrospectRespponse introspectRespponse(IntrospectRequest request) throws Exception {
+    public IntrospectRespponse introspectRespponse(IntrospectRequest request) throws JOSEException, ParseException {
         var token = request.getToken();
-        boolean isValid = true;
-        try {
-            verifyToken(token);
-        } catch (Exception e){
-            isValid = false;
-        }
-
-        return IntrospectRespponse.builder().valid(isValid).build();
-    }
-
-    private SignedJWT verifyToken(String token) throws Exception {
         JWSVerifier verifier = new MACVerifier(key.getBytes());
         SignedJWT signedJWT = SignedJWT.parse(token);
         Date exPiTyTime = signedJWT.getJWTClaimsSet().getExpirationTime();
         var verify = signedJWT.verify(verifier);
-        if(!(verify && exPiTyTime.after(new Date())))
-            throw new Exception("Cút!");
-        if(invalidatedTokenRepo.existsById(signedJWT.getJWTClaimsSet().getJWTID()))
-            throw new Exception("Cút");
-        return signedJWT;
+        return IntrospectRespponse.builder().valid(verify && exPiTyTime.after(new Date())).build();
     }
 
     /**
@@ -138,24 +116,5 @@ public class ConfigToken {
         var context = SecurityContextHolder.getContext();
         String name = context.getAuthentication().getName();
         return usersRepo.findByUsername(name);
-    }
-
-    /**
-     * logout token
-     *
-     * @return
-     */
-    public Object logout(LogoutRequest request) throws Exception {
-        var signToken = verifyToken(request.getToken());
-        String jit = signToken.getJWTClaimsSet().getJWTID();
-        Date expiryTime = signToken.getJWTClaimsSet().getExpirationTime();
-
-        InvalidatedToken invalidatedToken = InvalidatedToken
-                .builder()
-                .idToken(jit)
-                .expiryTime(expiryTime)
-                .build();
-        invalidatedTokenRepo.save(invalidatedToken);
-        return null;
     }
 }

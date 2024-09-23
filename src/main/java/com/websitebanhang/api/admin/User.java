@@ -1,18 +1,15 @@
 package com.websitebanhang.api.admin;
 
 import com.nimbusds.jose.JOSEException;
-import com.websitebanhang.configuration.ConfigToken;
+import com.websitebanhang.configuration.GenerateToken;
 import com.websitebanhang.constant.ApiResponse;
 import com.websitebanhang.dto.reponse.UserRequest;
 import com.websitebanhang.dto.request.IntrospectRequest;
 import com.websitebanhang.dto.reponse.IntrospectRespponse;
-import com.websitebanhang.dto.request.LogoutRequest;
 import com.websitebanhang.entitys.Users;
-import com.websitebanhang.repository.InvalidatedTokenRepo;
 import com.websitebanhang.service.UsersService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +24,7 @@ public class User {
     @Autowired
     private UsersService usersService;
     @Autowired
-    private ConfigToken token;
+    private GenerateToken generateToken;
 
     @GetMapping("/find")
     public ApiResponse find(){
@@ -41,7 +38,7 @@ public class User {
 
     @GetMapping("/find/one")
     public ApiResponse findOne(){
-        return ApiResponse.builder().code(200).data(token.userRequest()).message("Success").build();
+        return ApiResponse.builder().code(200).data(generateToken.userRequest()).message("Success").build();
     }
 
     @PostMapping("/create")
@@ -55,15 +52,8 @@ public class User {
     }
 
     @PostMapping("/introspect-request")
-    public IntrospectRespponse introspectRequest(@RequestBody IntrospectRequest request) throws Exception {
-        return token.introspectRespponse(request);
-    }
-
-    @PostMapping("/logout")
-    public ApiResponse logout(@RequestBody LogoutRequest request) throws Exception {
-       return ApiResponse.builder().code(200)
-               .data(token.logout(request))
-               .message("Logout thành công").build();
+    public IntrospectRespponse introspectRequest(@RequestBody IntrospectRequest request) throws SQLException, ParseException, JOSEException {
+        return generateToken.introspectRespponse(request);
     }
 
 }

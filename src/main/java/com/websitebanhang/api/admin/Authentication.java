@@ -1,6 +1,6 @@
 package com.websitebanhang.api.admin;
 
-import com.websitebanhang.configuration.ConfigToken;
+import com.websitebanhang.configuration.GenerateToken;
 import com.websitebanhang.constant.ApiResponse;
 import com.websitebanhang.dto.request.LoginRequest;
 import com.websitebanhang.dto.reponse.LoginResponse;
@@ -25,7 +25,7 @@ public class Authentication {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
     @Autowired
-    private ConfigToken token;
+    private GenerateToken generateToken;
 
 
     @PostMapping("/login")
@@ -37,7 +37,7 @@ public class Authentication {
             Users userDetails = customUserDetailsService.users(loginRequest.getUsername());
             SecurityContextHolder.getContext().setAuthentication(authentication);
             return ApiResponse.builder().data(LoginResponse.builder()
-                    .token(token.generateToken(userDetails))
+                    .token(generateToken.generateToken(userDetails))
                     .build()).message("Thành công").code(200).build();
         } catch (Exception e){
             log.info(e);
