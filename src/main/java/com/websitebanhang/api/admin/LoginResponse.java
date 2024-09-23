@@ -1,4 +1,4 @@
-package com.websitebanhang.dto;
+package com.websitebanhang.api.admin;
 
 
 import lombok.AllArgsConstructor;

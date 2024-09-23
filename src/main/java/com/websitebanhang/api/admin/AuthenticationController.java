@@ -1,17 +1,18 @@
 package com.websitebanhang.api.admin;
 
-import com.websitebanhang.configuration.GenerateToken;
 import com.websitebanhang.configuration.JwtTokenProvider;
 import com.websitebanhang.constant.ApiResponse;
-import com.websitebanhang.dto.LoginRequest;
-import com.websitebanhang.dto.LoginResponse;
 import com.websitebanhang.entitys.Users;
 import com.websitebanhang.service.impl.CustomUserDetailsService;
+import com.websitebanhang.service.impl.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.CustomAutowireConfigurer;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,6 @@ public class AuthenticationController {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-
     @PostMapping("/login")
     public ApiResponse login(@RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
@@ -35,8 +35,8 @@ public class AuthenticationController {
         );
         Users userDetails = customUserDetailsService.users(loginRequest.getUsername());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-//        String token = jwtTokenProvider.createToken(loginRequest.getUsername());
-        return ApiResponse.builder().data(LoginResponse.builder().token(GenerateToken.generateToken(loginRequest.getUsername()))
+        String token = jwtTokenProvider.createToken(loginRequest.getUsername());
+        return ApiResponse.builder().data(LoginResponse.builder().token(token)
                 .username(userDetails.getUsername())
                 .email(userDetails.getUsername())
                 .fullName(userDetails.getFullname())

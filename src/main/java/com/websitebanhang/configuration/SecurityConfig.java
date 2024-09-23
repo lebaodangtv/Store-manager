@@ -29,7 +29,7 @@ public class SecurityConfig {
     private String key;
 
     private final String[] PUBLIC_ENDPOINT_GET = {"/v1/api/products"};
-    private final String[] PUBLIC_ENDPOINT_POST = {"/user/create", "/auth/login", "/user/introspect-request"};
+    private final String[] PUBLIC_ENDPOINT_POST = {"/user/create", "/auth/login"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
