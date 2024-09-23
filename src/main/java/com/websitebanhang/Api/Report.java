@@ -1,4 +1,4 @@
-package com.websitebanhang.api;
+package com.websitebanhang.Api;
 
 import com.websitebanhang.service.ProductsService;
 import org.springframework.core.io.ByteArrayResource;

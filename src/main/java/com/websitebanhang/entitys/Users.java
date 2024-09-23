@@ -49,7 +49,8 @@ public class Users implements Serializable {/**
 	
 	@Column
 	String imgUrl;
-
+	
+	@Column
 	Boolean isDeleted;
 	
 	@ManyToOne

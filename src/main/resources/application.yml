@@ -17,12 +17,7 @@ spring:
     dbcp2:
       test-while-idle: true
       validation-query: SELECT 1
-  jpa:
-    hibernate:
-      ddl-auto: update  # Thay ??i giá tr? này tùy vào nhu c?u c?a b?n
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.SQLServerDialect
+
 jwt:
   signerKey: "d2ViU2VjdXJpdHkzMDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MA=="  # Khóa bí m?t dùng ?? ký JWT
 
