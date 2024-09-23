@@ -1,15 +1,13 @@
 package com.websitebanhang.dto;
 
 import java.io.Serializable;
-
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
 public class CartDetailDto implements Serializable {
 
 	private static final long serialVersionUID = -3557121659199139847L;
